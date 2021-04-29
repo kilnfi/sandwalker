@@ -5,10 +5,10 @@ PYTHON := python3
 all: local-run
 
 local-run: .venv
-	source .venv/bin/activate && FLASK_ENV_CONFIG=config.cfg flask run
+	source .venv/bin/activate && FLASK_ENV_CONFIG=../infra/config-dev.cfg flask run
 
 test: .venv
-	source .venv/bin/activate && FLASK_ENV_CONFIG=config-test.cfg python tests.py
+	source .venv/bin/activate && FLASK_ENV_CONFIG=../infra/config-test.cfg python tests.py
 
 .venv:
 	mkdir -p .venv

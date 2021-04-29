@@ -6,8 +6,6 @@ from ilock import ILock
 def make_app():
     with ILock('sandwalker-init-lock'):
         app = create_app()
-        with app.app_context():
-            fixtures.init_app(app, models.db)
     return app
 
 
