@@ -1,0 +1,13 @@
+<canvas id="glfx"></canvas> 
+
+<script id="glfx-vertex" type="x-shader/x-vertex">
+  attribute vec3 position;
+ 
+  void main() {
+      gl_Position = vec4(position, 1.0);
+  }
+</script>
+
+<script id="glfx-fragment" type="x-shader/x-fragment">
+  {% include 'glfx.c' %}
+</script>

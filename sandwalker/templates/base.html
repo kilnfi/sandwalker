@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <meta name="description" content="Pocket Reward Explorer">
+ 
+    <link href="{{ url_for('static', filename='css/_reset.scss.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/main.scss.css') }}" rel="stylesheet">
+
+    <title>Sand Walker</title>
+
+  </head>
+  <body>
+
+    <nav>
+      <ul>
+	<li class='{% if active == "home" %} active {% endif %}'>
+	  <a href="{{ url_for('sandwalker.home') }}">Home</a>
+	</li>
+	<li class='{% if active == "about" %} active {% endif %}'>
+	  <a href="{{ url_for('sandwalker.about') }}">About</a>
+	</li>
+
+	<div class="clear"></div>
+      </ul>
+    </nav>
+
+    {% block content %}
+    {% endblock %}
+
+    <footer>
+      <ul>
+	<li><a href="{{ url_for('sandwalker.home') }}">SandWalker</a> by <a href="https://baas.tech/">BaaS</a></li>
+      </ul>
+    </footer>
+
+    <script type="text/javascript" src="{{ url_for('static', filename='js/lightense.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/glfx.js') }}"></script>
+    
+  </body>
+</html>

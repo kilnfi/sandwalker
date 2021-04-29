@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% set active = "about" %}
+
+{% block content %}
+<article lang="en">
+  <header>
+    <h1>Sand Walker</h1>
+
+    {% include "glfx.html" %}
+
+    <small>About Sand Walker</small>
+  </header>
+  <div id="content">
+    {% include "_flashes.html" %}
+
+    <p>
+      The Sand Walker project is currently a beta version of a
+      real-time Pocket reward explorer, more information about the
+      future of the project can be found in PEP-X.
+    </p>
+
+  </div>
+</article>
+{% endblock %}

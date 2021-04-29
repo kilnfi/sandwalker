@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% set active = "home" %}
+
+{% block content %}
+<article lang="en">
+  <header>
+    <h1>Sand Walker</h1>
+
+    {% include "glfx.html" %}
+    
+    <small>Pocket Reward Explorer</small>
+  </header>
+  <div id="content">
+
+    {% include "_flashes.html" %}
+
+    <h2>A Wild Error Appears</h2>
+    
+    <p>
+      {{ error }}
+    </p>
+
+  </div>
+</article>
+{% endblock %}

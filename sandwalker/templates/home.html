@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% set active = "home" %}
+
+{% block content %}
+<article lang="en">
+  <header>
+    <h1>Sand Walker</h1>
+    
+    {% include "glfx.html" %}
+    
+    <small>The Pocket Reward Explorer</small>
+  </header>
+  <div id="content">
+
+    {% include "_flashes.html" %}
+    
+    <h2>Explore the reward history of a Pocket Account</h2>
+    
+  </div>
+</article>
+{% endblock %}
