@@ -11,9 +11,10 @@ db = SQLAlchemy()
 class TimelineEntry(db.Model):
     __tablename__ = 'timeline'
 
-    timeline = db.Column(db.Text())
-    block = db.Integer()
-    amount = db.Integer()
+    entry_id = db.Column(db.Integer, primary_key=True)
+    timeline = db.Column(db.Text)
+    block = db.Integer
+    amount = db.Integer
 
 
 def init_app(app):
