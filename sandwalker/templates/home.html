@@ -1,3 +1,5 @@
+{% from "_macros.html" import render_field, render_errors %}
+
 {% extends "base.html" %}
 
 {% set active = "home" %}
@@ -14,8 +16,23 @@
   <div id="content">
 
     {% include "_flashes.html" %}
+
+    {{ render_errors(form) }}
     
     <h2>Explore the reward history of a Pocket Account</h2>
+
+    <form action="" method="POST" novalidate formnovalidate class="form" role="form">
+      {{ form.hidden_tag() }}
+
+      {{ render_field(form.account, label='Account Identifier') }}
+      
+      <br />
+  
+      <input type="submit" value="View Rewards" />
+      <div class="clear"></div>
+
+</form>
+
     
   </div>
 </article>

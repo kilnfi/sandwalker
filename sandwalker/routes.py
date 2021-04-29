@@ -15,9 +15,12 @@ sandwalker = Blueprint(
 )
 
 
-@sandwalker.route('/')
+@sandwalker.route('/', methods=['GET', 'POST'])
 def home():
-    return render_template('home.html')
+    form = ViewPocketAccountHistoryForm()
+    if form.validate_on_submit():
+        flash('Account {0} was found'.format(form.account), 'success')
+    return render_template('home.html', form=form)
 
 
 @sandwalker.route('/about')

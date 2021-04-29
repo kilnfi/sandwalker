@@ -1,0 +1,21 @@
+{% macro render_errors(form) %}
+{% if form.errors %}
+
+{% for error in form.errors | filter_errors %}
+<p class="flash-ko">
+  <span class="flash-icon-ko">{{ error }}</span>
+</p>
+{% endfor %}
+
+{% endif %}
+{% endmacro %}
+
+{% macro render_field(field, label=None, label_visible=true, right_url=None, right_label=None) -%}
+<div class="{% if field.errors %}has-error{% endif %} {{ kwargs.pop('class_', '') }}">
+  {% if field.type != 'HiddenField' and label_visible %}
+  {% if not label %}{% set label=field.label.text %}{% endif %}
+  <label for="{{ field.id }}">{{ label|safe }}{% if field.errors %} <span class="error-star"><b>*</b></span>{% endif %}</label>
+  {% endif %}
+  {{ field(class_='form-control', **kwargs) }}
+</div>
+{%- endmacro %}
