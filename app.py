@@ -1,5 +1,5 @@
 from sandwalker import create_app
-from sandwalker import fixtures, models
+from sandwalker import models
 from ilock import ILock
 
 
