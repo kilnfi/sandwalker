@@ -14,10 +14,6 @@
     --color-text: #ffe7e5;
     --color-text-hl: #d81b60;
 
-    --color-mauve: #d473d4;
-    --color-amber: #fb8c00;
-    --color-coral: #ff7F50;
-
     --color-icon-reset: #000000;
 
     --color-ko: #d32f2f;
@@ -373,49 +369,6 @@ input[type="submit"], .right-button, .price {
     clear: both;
 }
 
-// Overrides for a bunch of plug-ins.
-.amber {
-    input[type="submit"], .right-button, .price {
-	border: 3px solid  var(--color-amber);
-    }
-    .right-button:hover, input[type="submit"]:hover, .price {
-	background-color: var(--color-amber);
-    }
-    a:hover {
-	color: var(--color-amber);
-    }
-}
-
-.coral {
-    input[type="submit"], .right-button, .price {
-	border: 3px solid  var(--color-coral);
-    }
-    .right-button:hover, input[type="submit"]:hover, .price {
-	background-color: var(--color-coral);
-    }
-    a:hover {
-	color: var(--color-coral);
-    }
-}
-
-.mauve {
-  
-    input[type="submit"], .right-button, .price {
-	border: 3px solid  var(--color-mauve);
-    }
-    .right-button:hover, input[type="submit"]:hover, .price {
-	background-color: var(--color-mauve);
-    }
-    a:hover {
-	color: var(--color-mauve);
-    }
-}
-
-// Prices.
-.price {
-    font-weight: bold;
-}
-
 // Misc.
 .exp {
     font-size: 70%;
@@ -433,11 +386,17 @@ table {
 	td {
 	    text-align: left;
 	    padding: 0.1em;
+	    margin: 0;
 	}
 	th {
 	    text-align: left;
 	}
     }
+
+    tr:nth-of-type(even) {
+	background-color: var(--color-light-bg);
+    }
+
 }
 
 // Stripe overrides.
@@ -533,28 +492,4 @@ button.material-button:focus {
     margin-left: 0.4em;
     width: calc(var(--font-size) * 2.5);
     float: right;
-}
-
-.download-icon-mauve {
-    fill: var(--color-mauve);
-}
-
-.download-icon-mauve:hover {
-    fill: #FFFFFF;
-}
-
-.download-icon-coral {
-    fill: var(--color-coral);
-}
-
-.download-icon-coral:hover {
-    fill: #FFFFFF;
-}
-
-.download-icon-amber {
-    fill: var(--color-amber);
-}
-
-.download-icon-amber:hover {
-    fill: #FFFFFF;
 }

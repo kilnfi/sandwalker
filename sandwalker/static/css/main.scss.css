@@ -23,9 +23,6 @@ img {
   --color-small:#5f5a5a;
   --color-text: #ffe7e5;
   --color-text-hl: #d81b60;
-  --color-mauve: #d473d4;
-  --color-amber: #fb8c00;
-  --color-coral: #ff7F50;
   --color-icon-reset: #000000;
   --color-ko: #d32f2f;
   --color-ok: #00FF7F;
@@ -296,36 +293,6 @@ input[type="submit"], .right-button, .price {
 .clear {
   clear: both; }
 
-.amber input[type="submit"], .amber .right-button, .amber .price {
-  border: 3px solid var(--color-amber); }
-
-.amber .right-button:hover, .amber input[type="submit"]:hover, .amber .price {
-  background-color: var(--color-amber); }
-
-.amber a:hover {
-  color: var(--color-amber); }
-
-.coral input[type="submit"], .coral .right-button, .coral .price {
-  border: 3px solid var(--color-coral); }
-
-.coral .right-button:hover, .coral input[type="submit"]:hover, .coral .price {
-  background-color: var(--color-coral); }
-
-.coral a:hover {
-  color: var(--color-coral); }
-
-.mauve input[type="submit"], .mauve .right-button, .mauve .price {
-  border: 3px solid var(--color-mauve); }
-
-.mauve .right-button:hover, .mauve input[type="submit"]:hover, .mauve .price {
-  background-color: var(--color-mauve); }
-
-.mauve a:hover {
-  color: var(--color-mauve); }
-
-.price {
-  font-weight: bold; }
-
 .exp {
   font-size: 70%;
   font-weight: bold;
@@ -337,9 +304,12 @@ table {
   font-size: 80%; }
   table tr td {
     text-align: left;
-    padding: 0.1em; }
+    padding: 0.1em;
+    margin: 0; }
   table tr th {
     text-align: left; }
+  table tr:nth-of-type(even) {
+    background-color: var(--color-light-bg); }
 
 .stripe-button-el {
   border: none !important;
@@ -419,23 +389,5 @@ button.material-button:focus {
   margin-left: 0.4em;
   width: calc(var(--font-size) * 2.5);
   float: right; }
-
-.download-icon-mauve {
-  fill: var(--color-mauve); }
-
-.download-icon-mauve:hover {
-  fill: #FFFFFF; }
-
-.download-icon-coral {
-  fill: var(--color-coral); }
-
-.download-icon-coral:hover {
-  fill: #FFFFFF; }
-
-.download-icon-amber {
-  fill: var(--color-amber); }
-
-.download-icon-amber:hover {
-  fill: #FFFFFF; }
 
 /*# sourceMappingURL=main.scss.css.map */
