@@ -17,23 +17,6 @@
 
     {% include "_flashes.html" %}
 
-    {{ render_errors(form) }}
-    
-    <h3>Reward History Explorer</h3>
-    
-    <form action="" method="POST" novalidate formnovalidate class="form" role="form">
-      {{ form.hidden_tag() }}
-
-      {{ render_field(form.account, label='Pocket Account Identifier') }}
-
-      <br />
-
-      <input type="submit" value="View Rewards" />
-      <div class="clear"></div>      
-
-    </form>
-
-    {% if entries %}
     <h3>Summary of Rewards</h3>
 
     <ul>
@@ -44,6 +27,8 @@
     <br />
 
     <h3>History of Rewards</h3>
+
+    {% if entries %}
 
     <div class="table-wrapper">
       <table>
@@ -62,7 +47,11 @@
 	  {% endfor %}
 	</tbody>
       </table>
-    {% endif %}
+      {% else %}
+
+      <p>No reward for this account.</p>
+      
+      {% endif %}
 
   </div>
 </article>

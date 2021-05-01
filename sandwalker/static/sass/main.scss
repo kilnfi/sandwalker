@@ -427,13 +427,15 @@ input[type="submit"], .right-button, .price {
 // Cart.
 table {
     width: 100%;
+    font-size: 80%;
 
     tr {
 	td {
-	    padding: 0em;
+	    text-align: left;
+	    padding: 0.1em;
 	}
-	td.right {
-	    text-align: right;
+	th {
+	    text-align: left;
 	}
     }
 }

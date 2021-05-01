@@ -333,11 +333,13 @@ input[type="submit"], .right-button, .price {
   color: var(--color-text-hl); }
 
 table {
-  width: 100%; }
+  width: 100%;
+  font-size: 80%; }
   table tr td {
-    padding: 0em; }
-  table tr td.right {
-    text-align: right; }
+    text-align: left;
+    padding: 0.1em; }
+  table tr th {
+    text-align: left; }
 
 .stripe-button-el {
   border: none !important;
