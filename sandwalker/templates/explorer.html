@@ -37,13 +37,17 @@
           <tr>
 	    <th>Block Height</th>
 	    <th>Reward</th>
+	    <th>Total</th>
 	  </tr>
 	</thead>
 	<tbody>
+	  {% set stats = {'cum': 0} %}
 	  {% for entry in entries %}
+	  {% if stats.update({'cum': stats.cum + entry.amount}) %}{% endif %}
 	  <tr>
 	    <td>{{ entry.block }}</td>
-	    <td>{{ entry.amount }} uPkt</td>
+	    <td>{{ entry.amount }}</td>
+	    <td>{{ stats.cum }}</td>
 	  </tr>
 	  {% endfor %}
 	</tbody>
