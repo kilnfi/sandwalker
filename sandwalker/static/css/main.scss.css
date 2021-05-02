@@ -35,22 +35,22 @@ img {
 
 @media (max-width: 1600px) {
   :root {
-    --font-size: 1.6vw;
+    --font-size: 1.4vw;
     --side-padding: calc(var(--space) * 1.1); } }
 
 @media (max-width: 1080px) {
   :root {
-    --font-size: 2.25vw;
+    --font-size: 1.8vw;
     --side-padding: calc(var(--space) * 0.5); } }
 
 @media (max-width: 640px) {
   :root {
-    --font-size: 2.80vw;
+    --font-size: 2.0vw;
     --side-padding: calc(var(--space) * 0.3); } }
 
 @media (max-width: 400px) {
   :root {
-    --font-size: 3.50vw;
+    --font-size: 3.0vw;
     --side-padding: calc(var(--space) * 0.15); } }
 
 html {
@@ -297,7 +297,7 @@ input[type="submit"], .right-button, .price {
   font-size: 70%;
   font-weight: bold;
   vertical-align: top;
-  color: var(--color-text-hl); }
+  color: var(--color-small); }
 
 table {
   width: 100%;

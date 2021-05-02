@@ -28,7 +28,7 @@ def home():
 @sandwalker.route('/explorer/<account>', methods=['GET'])
 def explorer(account):
     entries = TimelineEntry.query.filter(TimelineEntry.account == account).all()
-    total = sum([entry.amount for entry in entries])
+    total = sum([entry.amount for entry in entries]) / float(10**6)
     count = len(entries)
 
     if len(entries) == 0:
