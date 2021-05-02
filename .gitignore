@@ -4,3 +4,5 @@ __pycache__
 .DS_Store
 .venv
 sandwalker.db
+config-prod.cfg
+data/

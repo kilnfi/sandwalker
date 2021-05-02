@@ -5,7 +5,7 @@ PYTHON := python3
 all: local-run
 
 local-run: .venv
-	source .venv/bin/activate && FLASK_ENV_CONFIG=../infra/config-dev.cfg flask run --host=0.0.0.0
+	source .venv/bin/activate && FLASK_ENV_CONFIG=../infra/config-dev.cfg flask run --host=127.0.0.1
 
 test: .venv
 	source .venv/bin/activate && FLASK_ENV_CONFIG=../infra/config-test.cfg python tests.py
