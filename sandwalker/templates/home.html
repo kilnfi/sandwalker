@@ -17,6 +17,18 @@
 
     {% include "_flashes.html" %}
 
+    <p>
+      The <a href="{{ url_for('sandwalker.home') }}">Sandwalker
+      Project</a> is reward explorer for
+      the <a href="https://pokt.network/">Pocket Network project</a>.
+      It provides a frontend to explore rewards of any Pocket account
+      using live data.
+    </p>
+
+    <p>
+      <a href="{{ url_for('sandwalker.explorer') }}" class="right-button">Start Exploring</a>
+    </p>
+
   </div>
 </article>
 {% endblock %}
