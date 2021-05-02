@@ -7,6 +7,7 @@ from sassutils.wsgi import SassMiddleware
 
 from .models import TimelineEntry
 from .forms import ViewPocketAccountHistoryForm
+from .pocket import make_entries_by_month
 
 
 sandwalker = Blueprint(
@@ -30,24 +31,23 @@ def explorer(account=None):
     
     return render_template('explorer.html', form=form)
 
-
 @sandwalker.route('/explore/<account>', methods=['GET'])
 def explore(account):
-    entries = []
+
+    entries_by_month = []
     total = None
     count = None
 
-    # Handle fetching of entries if we have an account.
     if account:
         entries = TimelineEntry.query.filter(TimelineEntry.account == account).all()
-        total = sum([entry.amount for entry in entries]) / float(10**6)
-        count = len(entries)
 
         if len(entries) == 0:
             flash('No reward were found for {0}'.format(account), 'error')
+
+        count, total, entries_by_month = make_entries_by_month(entries)
     
     return render_template(
-        'explore.html', account=account,entries=entries, total=total, count=count)
+        'explore.html', account=account, entries_by_month=entries_by_month, total=total, count=count)
 
 
 @sandwalker.route('/about')

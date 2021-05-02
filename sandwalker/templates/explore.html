@@ -17,8 +17,8 @@
 
     {% include "_flashes.html" %}
 
-    {% if entries %}
-    
+    {% if entries_by_month %}
+
     <h3>{{ account }}</h3>
 
     <p>Summary of rewards:</p>
@@ -32,28 +32,36 @@
 
     <h3>History</h3>
 
+    {% for month, month_entry in entries_by_month.items() %}
+
+    <h2>{{ month }} &mdash; {{ '%0.3f'|format(month_entry.month_total / 10**6) }} <small class="exp">pkt</small></h2>
+
     <div class="table-wrapper">
       <table>
         <thead>
           <tr>
+	    <th>Id</th>
 	    <th>Block Height</th>
 	    <th>Reward</th>
+	    <th>Month Total</th>
 	    <th>Total</th>
 	  </tr>
 	</thead>
 	<tbody>
-	  {% set stats = {'cum': 0} %}
-	  {% for entry in entries %}
-	  {% if stats.update({'cum': stats.cum + entry.amount}) %}{% endif %}
+	  {% for entry in month_entry.entries %}
 	  <tr>
+	    <td>{{ entry.current_count }}</td>
 	    <td>{{ entry.block }}</td>
 	    <td>{{ '%0.3f'|format(entry.amount / 10**6) }} <small class="exp">pkt</small></td>
-	    <td>{{ '%0.3f'|format(stats.cum / 10**6) }} <small class="exp">pkt</small></td>
+	    <td>{{ '%0.3f'|format(entry.current_month_total / 10**6) }} <small class="exp">pkt</small></td>
+	    <td>{{ '%0.3f'|format(entry.current_total / 10**6) }} <small class="exp">pkt</small></td>
 	  </tr>
 	  {% endfor %}
 	</tbody>
       </table>
     </div>
+
+    {% endfor %}
 
     {% else %}
 
