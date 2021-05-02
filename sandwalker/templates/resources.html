@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% set active = "resources" %}
+
+{% block content %}
+<article lang="en">
+  <header>
+    <h1>Sand Walker</h1>
+
+    {% include "glfx.html" %}
+
+    <small>The Pocket Reward Explorer</small>
+  </header>
+  <div id="content">
+    {% include "_flashes.html" %}
+
+    <h2>The Sandwalker Database</h2>
+
+    <p>
+      The database of the the Sand Walker project contains rewards entries
+      from all pocket accounts since block 0, it is structured as follows:
+
+      <ul>
+	<li><b>id</b>, a unique internal identifier for the reward,</li>
+	<li><b>account</b>, a pocket account,</li>
+	<li><b>block</b>, the block height,</li>
+	<li><b>reward</b>, the reward in <span class="exp">&#xB5;Pkt</span>.</li>
+      </ul>
+
+      <br />
+      
+      The database can be either rebuilt by replaying the blockchain
+      using tools from the <a href="#" >public repository</a>,
+      or by downloading it below.
+    </p>
+
+    <p>
+      <a href="#" class="right-button">Download Daily Dump</a>
+    </p>
+
+  </div>
+</article>
+{% endblock %}

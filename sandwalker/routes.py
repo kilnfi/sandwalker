@@ -55,6 +55,11 @@ def about():
     return render_template('about.html')
 
 
+@sandwalker.route('/resources', methods=['GET'])
+def resources():
+    return render_template('resources.html')
+
+
 @sandwalker.app_errorhandler(404)
 def page_not_found(e):
     return render_template('error.html', error='The page you requested was not found'), 404
