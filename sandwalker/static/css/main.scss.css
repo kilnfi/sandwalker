@@ -280,6 +280,19 @@ input[type="submit"], .right-button, .price {
   background-color: var(--color-dark-bg);
   border: 3px solid var(--color-text-hl); }
 
+.large-button {
+  width: 100%;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  margin-bottom: 0.5em;
+  margin-top: 0.5em;
+  cursor: pointer;
+  float: left;
+  background-color: var(--color-dark-bg);
+  border: 3px solid var(--color-text-hl); }
+
 .form-button, .right-button {
   float: right;
   margin-left: 0.5em;
