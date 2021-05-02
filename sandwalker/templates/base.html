@@ -19,6 +19,9 @@
 	<li class='{% if active == "home" %} active {% endif %}'>
 	  <a href="{{ url_for('sandwalker.home') }}">Home</a>
 	</li>
+	<li class='{% if active == "explorer" %} active {% endif %}'>
+	  <a href="{{ url_for('sandwalker.explorer') }}">Explorer</a>
+	</li>
 	<li class='{% if active == "about" %} active {% endif %}'>
 	  <a href="{{ url_for('sandwalker.about') }}">About</a>
 	</li>

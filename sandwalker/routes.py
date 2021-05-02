@@ -1,7 +1,7 @@
 """Sandwalker routes."""
 
 from flask import Blueprint
-from flask import abort, current_app, flash, redirect, render_template, url_for
+from flask import abort, current_app, flash, redirect, render_template, request, url_for
 from flask_minify import minify
 from sassutils.wsgi import SassMiddleware
 
@@ -17,25 +17,37 @@ sandwalker = Blueprint(
 
 @sandwalker.route('/', methods=['GET', 'POST'])
 def home():
+    return render_template('home.html')
+
+
+@sandwalker.route('/explorer', methods=['GET', 'POST'])
+def explorer(account=None):
+
+    # Redirect to the nice URL /explorer/<account>/
     form = ViewPocketAccountHistoryForm()
+    if request.method == 'POST' and form.validate_on_submit():
+        return redirect(url_for('sandwalker.explore', account=form.account.data))
+    
+    return render_template('explorer.html', form=form)
 
-    if form.validate_on_submit():
-        return redirect(url_for('sandwalker.explorer', account=form.account.data))
 
-    return render_template('home.html', form=form)
+@sandwalker.route('/explore/<account>', methods=['GET'])
+def explore(account):
+    entries = []
+    total = None
+    count = None
 
+    # Handle fetching of entries if we have an account.
+    if account:
+        entries = TimelineEntry.query.filter(TimelineEntry.account == account).all()
+        total = sum([entry.amount for entry in entries]) / float(10**6)
+        count = len(entries)
 
-@sandwalker.route('/explorer/<account>', methods=['GET'])
-def explorer(account):
-    entries = TimelineEntry.query.filter(TimelineEntry.account == account).all()
-    total = sum([entry.amount for entry in entries]) / float(10**6)
-    count = len(entries)
-
-    if len(entries) == 0:
-        flash('No reward were found for {0}'.format(account), 'error')
+        if len(entries) == 0:
+            flash('No reward were found for {0}'.format(account), 'error')
     
     return render_template(
-        'explorer.html', account=account,entries=entries, total=total, count=count)
+        'explore.html', account=account,entries=entries, total=total, count=count)
 
 
 @sandwalker.route('/about')

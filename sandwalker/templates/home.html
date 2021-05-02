@@ -17,53 +17,6 @@
 
     {% include "_flashes.html" %}
 
-    {{ render_errors(form) }}
-    
-    <h3>Reward History Explorer</h3>
-    
-    <form action="" method="POST" novalidate formnovalidate class="form" role="form">
-      {{ form.hidden_tag() }}
-
-      {{ render_field(form.account, label='Pocket Account Identifier') }}
-
-      <br />
-
-      <input type="submit" value="View Rewards" />
-      <div class="clear"></div>      
-
-    </form>
-
-    {% if entries %}
-    <h3>Summary of Rewards</h3>
-
-    <ul>
-      <li>{{ count }} rewards</li>
-      <li>{{ total }} uPkt minted</li>
-    </ul>
-
-    <br />
-
-    <h3>History of Rewards</h3>
-
-    <div class="table-wrapper">
-      <table>
-        <thead>
-          <tr>
-	    <th>Block Height</th>
-	    <th>Reward</th>
-	  </tr>
-	</thead>
-	<tbody>
-	  {% for entry in entries %}
-	  <tr>
-	    <td>{{ entry.block }}</td>
-	    <td>{{ entry.amount }} uPkt</td>
-	  </tr>
-	  {% endfor %}
-	</tbody>
-      </table>
-    {% endif %}
-
   </div>
 </article>
 {% endblock %}

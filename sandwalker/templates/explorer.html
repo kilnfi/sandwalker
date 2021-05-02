@@ -2,7 +2,7 @@
 
 {% extends "base.html" %}
 
-{% set active = "home" %}
+{% set active = "explorer" %}
 
 {% block content %}
 <article lang="en">
@@ -16,49 +16,23 @@
   <div id="content">
 
     {% include "_flashes.html" %}
+    {{ render_errors(form) }}
 
-    <h3>{{ account }}</h3>
+    <h3>Reward History Explorer</h3>
 
-    <p>Summary of rewards:</p>
-
-    <ul>
-      <li>{{ count }} rewards earned</li>
-      <li>{{ '%0.3f'|format(total) }} <small class="exp">pkt</small> minted</li>
-    </ul>
-
-    <br />
-
-    <h3>History</h3>
-
-    {% if entries %}
-
-    <div class="table-wrapper">
-      <table>
-        <thead>
-          <tr>
-	    <th>Block Height</th>
-	    <th>Reward</th>
-	    <th>Total</th>
-	  </tr>
-	</thead>
-	<tbody>
-	  {% set stats = {'cum': 0} %}
-	  {% for entry in entries %}
-	  {% if stats.update({'cum': stats.cum + entry.amount}) %}{% endif %}
-	  <tr>
-	    <td>{{ entry.block }}</td>
-	    <td>{{ '%0.3f'|format(entry.amount / 10**6) }} <small class="exp">pkt</small></td>
-	    <td>{{ '%0.3f'|format(stats.cum / 10**6) }} <small class="exp">pkt</small></td>
-	  </tr>
-	  {% endfor %}
-	</tbody>
-      </table>
-      {% else %}
-
-      <p>No reward for this account.</p>
+    <form action="" method="POST" novalidate formnovalidate class="form" role="form">
+      {{ form.hidden_tag() }}
       
-      {% endif %}
+      {{ render_field(form.account, label='Pocket Account Identifier') }}
+      
+      <br />
+      
+      <input type="submit" value="View Rewards" />
+      <div class="clear"></div>
+      
+    </form>
 
   </div>
+
 </article>
 {% endblock %}
