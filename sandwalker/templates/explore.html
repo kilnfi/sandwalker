@@ -28,9 +28,15 @@
       <li>{{ '%0.3f'|format(total / 10**6) }} <small class="exp">pkt</small> minted</li>
     </ul>
 
-    <br />
-
     <h3>History</h3>
+
+    <ul>
+      {% for month, month_entry in entries_by_month.items() %}
+      <li><a href="#{{ month }}">{{ month }}</a> &mdash; {{ '%0.3f'|format(month_entry.month_total / 10**6) }} <small class="exp">pkt</small></li>
+      {% endfor %}
+    </ul>
+
+    <h3>Full History</h3>
 
     {% for month, month_entry in entries_by_month.items() %}
 
@@ -39,6 +45,8 @@
 	Month {{ month }} &mdash; {{ '%0.3f'|format(month_entry.month_total / 10**6) }} <small class="exp">pkt</small>
       </a>
     </h2>
+
+    <br />
 
     <div class="table-wrapper">
       <table>
