@@ -20,6 +20,23 @@ class BasicTests(unittest.TestCase):
     def test_home(self):
         response = self.test_app.get('/', follow_redirects=True)
         self.assertEqual(response.status_code, 200)
+
+    def test_explorer(self):
+        response = self.test_app.get('/explorer', follow_redirects=True)
+        self.assertEqual(response.status_code, 200)
+
+    def test_about(self):
+        response = self.test_app.get('/about', follow_redirects=True)
+        self.assertEqual(response.status_code, 200)
+
+    def test_explore_nok(self):
+        response = self.test_app.get('/explore', follow_redirects=True)
+        self.assertEqual(response.status_code, 404)
+
+    def test_explore_not_found(self):
+        response = self.test_app.get('/explore/42', follow_redirects=True)
+        self.assertEqual(response.status_code, 200)
+        assert 'No reward were found for 42' in str(response.data)
         
  
 if __name__ == "__main__":
