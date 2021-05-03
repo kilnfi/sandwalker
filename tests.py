@@ -29,6 +29,11 @@ class BasicTests(unittest.TestCase):
         response = self.test_app.get('/about', follow_redirects=True)
         self.assertEqual(response.status_code, 200)
 
+    def test_resources(self):
+        response = self.test_app.get('/resources', follow_redirects=True)
+        self.assertEqual(response.status_code, 200)
+        assert 'Download Daily Dump' in str(response.data)
+
     def test_explore_nok(self):
         response = self.test_app.get('/explore', follow_redirects=True)
         self.assertEqual(response.status_code, 404)
