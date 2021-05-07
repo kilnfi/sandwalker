@@ -24,14 +24,14 @@
     <ul>
       <li>{{ account }}</li>
       <li>{{ count }} rewards earned</li>
-      <li>{{ '%0.3f'|format(total / 10**6) }} <small class="exp">pkt</small> minted</li>
+      <li>{{ '%0.3f'|format(total / 10**6) }} <small class="exp">pokt</small> minted</li>
     </ul>
 
     <h3>History</h3>
 
     <ul>
       {% for month, month_entry in entries_by_month.items() %}
-      <li><a href="#{{ month }}">{{ month }}</a> &mdash; {{ '%0.3f'|format(month_entry.month_total / 10**6) }} <small class="exp">pkt</small></li>
+      <li><a href="#{{ month }}">{{ month }}</a> &mdash; {{ '%0.3f'|format(month_entry.month_total / 10**6) }} <small class="exp">pokt</small></li>
       {% endfor %}
     </ul>
 
@@ -41,7 +41,7 @@
 
     <h2 id="{{ month }}">
       <a href="#{{ month }}" class="large-button">
-	Month {{ month }} &mdash; {{ '%0.3f'|format(month_entry.month_total / 10**6) }} <small class="exp">pkt</small>
+	Month {{ month }} &mdash; {{ '%0.3f'|format(month_entry.month_total / 10**6) }} <small class="exp">pokt</small>
       </a>
     </h2>
 
@@ -63,9 +63,9 @@
 	  <tr>
 	    <td>{{ entry.current_count }}</td>
 	    <td>{{ entry.block }}</td>
-	    <td>{{ '%0.3f'|format(entry.amount / 10**6) }} <small class="exp">pkt</small></td>
-	    <td>{{ '%0.3f'|format(entry.current_month_total / 10**6) }} <small class="exp">pkt</small></td>
-	    <td>{{ '%0.3f'|format(entry.current_total / 10**6) }} <small class="exp">pkt</small></td>
+	    <td>{{ '%0.3f'|format(entry.amount / 10**6) }} <small class="exp">pokt</small></td>
+	    <td>{{ '%0.3f'|format(entry.current_month_total / 10**6) }} <small class="exp">pokt</small></td>
+	    <td>{{ '%0.3f'|format(entry.current_total / 10**6) }} <small class="exp">pokt</small></td>
 	  </tr>
 	  {% endfor %}
 	</tbody>
