@@ -39,6 +39,7 @@ def explore(account):
     count = None
 
     if account:
+        account = account.lower()
         entries = TimelineEntry.query.filter(TimelineEntry.account == account).all()
 
         if len(entries) == 0:
