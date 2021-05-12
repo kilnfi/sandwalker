@@ -1,3 +1,5 @@
+# Dockerfile for the frontend Sandwalker
+
 FROM python:3.7-alpine
 
 WORKDIR /code
