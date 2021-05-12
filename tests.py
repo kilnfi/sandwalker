@@ -11,6 +11,9 @@ class BasicTests(unittest.TestCase):
         self.app = create_app()
         with self.app.app_context():
             self.test_app = self.app.test_client()
+            models.db.session.add(
+                models.TimelineEntry(account='84', block=25000, amount=1000000))
+            models.db.session.commit()
  
     def tearDown(self):
         with self.app.app_context():
@@ -42,7 +45,13 @@ class BasicTests(unittest.TestCase):
         response = self.test_app.get('/explore/42', follow_redirects=True)
         self.assertEqual(response.status_code, 200)
         assert 'No reward were found for 42' in str(response.data)
-        
+
+    def test_explore_rewards_found(self):
+        response = self.test_app.get('/explore/84', follow_redirects=True)
+        self.assertEqual(response.status_code, 200)
+        assert '1 rewards earned' in str(response.data)
+        assert '1.000 <small class="exp">pokt</small> minted' in str(response.data)
+       
  
 if __name__ == "__main__":
     unittest.main()
