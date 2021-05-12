@@ -61,6 +61,28 @@ def resources():
     return render_template('resources.html')
 
 
+@sandwalker.route('/api/rewards/<account>', methods=['GET'])
+def api_rewards(account):
+    result = {'error': None}
+    if not account:
+        result['error'] = 'Invalid account parameters'
+        return jsonify(result), 503
+
+    account = account.lower()
+    entries = TimelineEntry.query.filter(TimelineEntry.account == account).all()
+    if len(entries) == 0:
+        result['error'] = 'No rewards found for {0}'.format(account)
+        return jsonify(result), 404
+
+    count, total, entries_by_month = make_entries_by_month(entries)
+
+    result['count'] = count
+    result['total'] = total
+    result['entries'] = entries_by_month
+
+    return jsonify(result), 200
+
+
 @sandwalker.app_errorhandler(404)
 def page_not_found(e):
     return render_template('error.html', error='The page you requested was not found'), 404
@@ -90,4 +112,3 @@ def init_app(app):
     app.wsgi_app = SassMiddleware(app.wsgi_app, {
         'sandwalker': ('static/sass', 'static/css', '/static/css')
     })
-    
