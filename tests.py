@@ -51,7 +51,24 @@ class BasicTests(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         assert '1 rewards earned' in str(response.data)
         assert '1.000 <small class="exp">pokt</small> minted' in str(response.data)
-       
- 
+
+    def test_api_rewards_all(self):
+        response = self.test_app.get('/api/rewards/84', follow_redirects=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(1, response.json['count'])
+        self.assertEqual(None, response.json['error'])
+        self.assertEqual(1000000, response.json['total'])
+        self.assertEqual({
+            '2021-05-01': {
+                'entries': [{
+                    'amount': 1000000,
+                    'block': 25000,
+                    'current_count': 1,
+                    'current_month_total': 1000000,
+                    'current_total': 1000000
+                }],
+                'month_total': 1000000}}, response.json['all_entries'])
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -1,7 +1,7 @@
 """Sandwalker routes."""
 
 from flask import Blueprint
-from flask import abort, current_app, flash, redirect, render_template, request, url_for
+from flask import abort, current_app, flash, jsonify, redirect, render_template, request, url_for
 from flask_minify import minify
 from sassutils.wsgi import SassMiddleware
 
@@ -78,7 +78,7 @@ def api_rewards(account):
 
     result['count'] = count
     result['total'] = total
-    result['entries'] = entries_by_month
+    result['all_entries'] = entries_by_month
 
     return jsonify(result), 200
 
