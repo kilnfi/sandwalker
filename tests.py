@@ -10,6 +10,7 @@ class BasicTests(unittest.TestCase):
     def setUp(self):
         self.app = create_app()
         with self.app.app_context():
+            model.db.create_all()
             self.test_app = self.app.test_client()
             models.db.session.add(
                 models.TimelineEntry(account='84', block=25000, amount=1000000))

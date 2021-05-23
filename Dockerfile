@@ -25,6 +25,6 @@ ADD app.py /code/
 ADD sandwalker /code/sandwalker
 ADD infra /code/infra
 
-ENV FLASK_ENV_CONFIG=/code/infra/config-prod.cfg
+ENV FLASK_ENV_CONFIG=/code/infra/config-dev.cfg
 
 CMD ["gunicorn", "-w", "4", "-b", ":5000", "app:app"]
