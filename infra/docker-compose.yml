@@ -11,5 +11,7 @@ services:
   sandwalker_backend:
     build: ../pocket/
     ports:
+    - "8081:8081"
+    - "26656:26656"
     volumes:
     - "./data:/home/app/data"
