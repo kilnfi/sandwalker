@@ -1,0 +1,95 @@
+diff --git a/go.mod b/go.mod
+index bb438b25..8ef64d17 100644
+--- a/go.mod
++++ b/go.mod
+@@ -9,6 +9,7 @@ require (
+ 	github.com/hashicorp/golang-lru v0.5.4
+ 	github.com/jordanorelli/lexnum v0.0.0-20141216151731-460eeb125754
+ 	github.com/julienschmidt/httprouter v1.3.0
++	github.com/mattn/go-sqlite3 v2.0.3+incompatible
+ 	github.com/pkg/errors v0.9.1
+ 	github.com/prometheus/client_golang v1.5.1
+ 	github.com/regen-network/cosmos-proto v0.3.0
+diff --git a/go.sum b/go.sum
+index 3fade72f..4f9f6ef6 100644
+--- a/go.sum
++++ b/go.sum
+@@ -235,6 +235,8 @@ github.com/mattn/go-colorable v0.0.9/go.mod h1:9vuHe8Xs5qXnSaW/c/ABM9alt+Vo+STaO
+ github.com/mattn/go-isatty v0.0.3/go.mod h1:M+lRXTBqGeGNdLjl/ufCoiOlB5xdOkqRJdNxMWT7Zi4=
+ github.com/mattn/go-isatty v0.0.4/go.mod h1:M+lRXTBqGeGNdLjl/ufCoiOlB5xdOkqRJdNxMWT7Zi4=
+ github.com/mattn/go-runewidth v0.0.2/go.mod h1:LwmH8dsx7+W8Uxz3IHJYH5QSwggIsqBzpuz5H//U1FU=
++github.com/mattn/go-sqlite3 v2.0.3+incompatible h1:gXHsfypPkaMZrKbD5209QV9jbUTJKjyR5WD3HYQSd+U=
++github.com/mattn/go-sqlite3 v2.0.3+incompatible/go.mod h1:FPy6KqzDD04eiIsT53CuJW3U88zkxoIYsOqkbpncsNc=
+ github.com/matttproud/golang_protobuf_extensions v1.0.1 h1:4hp9jkHxhMHkqkrB3Ix0jegS5sx/RkqARlsWZ6pIwiU=
+ github.com/matttproud/golang_protobuf_extensions v1.0.1/go.mod h1:D8He9yQNgCq6Z5Ld7szi9bcBfOoFv/3dc6xSMkL2PC0=
+ github.com/miekg/dns v1.0.14/go.mod h1:W1PPwlIAgtquWBMBEV9nkV9Cazfe8ScdGz/Lj7v3Nrg=
+diff --git a/store/timeline.go b/store/timeline.go
+new file mode 100644
+index 00000000..0a936626
+--- /dev/null
++++ b/store/timeline.go
+@@ -0,0 +1,42 @@
++package store
++
++import (
++	"database/sql"
++	"log"
++	"time"
++
++	_ "github.com/mattn/go-sqlite3"
++)
++
++var timelineDb *sql.DB = nil
++
++func InsertTimelineEvent(account string, block int64, when time.Time, amount int64) error {
++	statement, err := timelineDb.Prepare("INSERT INTO timeline (account, block, time, amount) VALUES (?, ?, ?, ?, ?)")
++	if err != nil {
++		log.Printf("unable to prepare timeline insert query: %v", err)
++		return err
++	}
++	_, err = statement.Exec(account, block, when, amount)
++	if err != nil {
++		log.Printf("unable to exec timeline insert query: %v", err)
++		return err
++	}
++	return nil
++}
++
++func init() {
++	var err error
++
++	timelineDb, err = sql.Open("sqlite3", "timeline.db")
++	if err != nil {
++		log.Fatalf("unable to open timeline db: %v", err)
++	}
++	statement, err := timelineDb.Prepare("CREATE TABLE IF NOT EXISTS timeline(account TEXT, block INTEGER, time DATETIME, amount INTEGER)")
++	if err != nil {
++		log.Fatalf("unable to prepare create table statement in timeline db: %v", err)
++	}
++	_, err = statement.Exec()
++	if err != nil {
++		log.Fatalf("unable to create table in timeline db: %v", err)
++	}
++}
+diff --git a/x/nodes/keeper/reward.go b/x/nodes/keeper/reward.go
+index cf023641..90128e27 100644
+--- a/x/nodes/keeper/reward.go
++++ b/x/nodes/keeper/reward.go
+@@ -5,6 +5,7 @@ import (
+ 	sdk "github.com/pokt-network/pocket-core/types"
+ 	govTypes "github.com/pokt-network/pocket-core/x/gov/types"
+ 	"github.com/pokt-network/pocket-core/x/nodes/types"
++	"github.com/pokt-network/pocket-core/store"
+ )
+ 
+ // RewardForRelays - Award coins to an address (will be called at the beginning of the next block)
+@@ -64,6 +65,9 @@ func (k Keeper) mint(ctx sdk.Ctx, amount sdk.BigInt, address sdk.Address) sdk.Re
+ 		return sendErr.Result()
+ 	}
+ 	logString := fmt.Sprintf("a reward of %s was minted to %s", amount.String(), address.String())
++
++	store.InsertTimelineEvent(address.String(), ctx.BlockHeight(), ctx.BlockTime(), amount.Int64())
++
+ 	k.Logger(ctx).Info(logString)
+ 	return sdk.Result{
+ 		Log: logString,
