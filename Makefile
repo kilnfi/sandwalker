@@ -8,7 +8,7 @@ local-run: .venv
 	source .venv/bin/activate && flask run --host=127.0.0.1
 
 test: .venv
-	source .venv/bin/activate && python tests.py
+	source .venv/bin/activate && DATABASE_URI="sqlite:///:memory:" python tests.py
 
 .venv:
 	mkdir -p .venv

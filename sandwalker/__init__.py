@@ -13,7 +13,6 @@ def create_app():
     app.register_blueprint(routes.sandwalker)
 
     app.config.from_object(config.ConfigClass)
-    app.config.from_envvar('FLASK_ENV_CONFIG')
 
     with app.app_context():
         models.init_app(app)

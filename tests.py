@@ -8,8 +8,6 @@ from sandwalker import models, routes
 class BasicTests(unittest.TestCase):
 
     def setUp(self):
-        os.settenv('DATABASE_URI', 'sqlite:///:memory:')
-
         self.app = create_app()
         with self.app.app_context():
             models.db.create_all()
