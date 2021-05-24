@@ -16,15 +16,14 @@ RUN apk add --no-cache \
     jpeg-dev \
     g++
 
-COPY infra/requirements.txt requirements.txt
+COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
 EXPOSE 5000
 
 ADD app.py /code/
 ADD sandwalker /code/sandwalker
-ADD infra /code/infra
 
-ENV FLASK_ENV_CONFIG=/code/infra/config-dev.cfg
+ENV DATABASE_URI "sqlite:///../infra/data/sandwalker.db"
 
 CMD ["gunicorn", "-w", "4", "-b", ":5000", "app:app"]

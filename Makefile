@@ -5,12 +5,12 @@ PYTHON := python3
 all: local-run
 
 local-run: .venv
-	source .venv/bin/activate && FLASK_ENV_CONFIG=../infra/config-dev.cfg flask run --host=127.0.0.1
+	source .venv/bin/activate && flask run --host=127.0.0.1
 
 test: .venv
-	source .venv/bin/activate && FLASK_ENV_CONFIG=../infra/config-test.cfg python tests.py
+	source .venv/bin/activate && python tests.py
 
 .venv:
 	mkdir -p .venv
 	$(PYTHON) -m venv .venv
-	source .venv/bin/activate && pip3 install -r infra/requirements.txt
+	source .venv/bin/activate && pip3 install -r requirements.txt

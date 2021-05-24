@@ -1,8 +1,15 @@
 version: "3.8"
 services:
-  sandwalker_web:
+  sandwalker_frontend:
+    environment:
+      - VIRTUALHOST=dev.sandwalker.sbrk.org:5000
     build: ../
     ports:
-    - "10002:5000"
+    - "5000:5000"
     volumes:
     - "./data:/data"
+  sandwalker_backend:
+    build: ../pocket/
+    ports:
+    volumes:
+    - "./data:/home/app/data"
