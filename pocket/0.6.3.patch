@@ -25,7 +25,7 @@ index 3fade72f..4f9f6ef6 100644
  github.com/miekg/dns v1.0.14/go.mod h1:W1PPwlIAgtquWBMBEV9nkV9Cazfe8ScdGz/Lj7v3Nrg=
 diff --git a/store/timeline.go b/store/timeline.go
 new file mode 100644
-index 00000000..0a936626
+index 00000000..7b789bc2
 --- /dev/null
 +++ b/store/timeline.go
 @@ -0,0 +1,42 @@
@@ -42,7 +42,7 @@ index 00000000..0a936626
 +var timelineDb *sql.DB = nil
 +
 +func InsertTimelineEvent(account string, block int64, when time.Time, amount int64) error {
-+	statement, err := timelineDb.Prepare("INSERT INTO timeline (account, block, time, amount) VALUES (?, ?, ?, ?, ?)")
++	statement, err := timelineDb.Prepare("INSERT INTO timeline (account, block, time, amount) VALUES (?, ?, ?, ?)")
 +	if err != nil {
 +		log.Printf("unable to prepare timeline insert query: %v", err)
 +		return err
@@ -58,7 +58,7 @@ index 00000000..0a936626
 +func init() {
 +	var err error
 +
-+	timelineDb, err = sql.Open("sqlite3", "/home/app/data/timeline.db")
++	timelineDb, err = sql.Open("sqlite3", "/home/app/.pocket/data/timeline.db")
 +	if err != nil {
 +		log.Fatalf("unable to open timeline db: %v", err)
 +	}
@@ -93,3 +93,23 @@ index cf023641..90128e27 100644
  	k.Logger(ctx).Info(logString)
  	return sdk.Result{
  		Log: logString,
+diff --git a/x/nodes/keeper/slash.go b/x/nodes/keeper/slash.go
+index 9fb35f12..2db498f4 100644
+--- a/x/nodes/keeper/slash.go
++++ b/x/nodes/keeper/slash.go
+@@ -46,6 +46,7 @@ func (k Keeper) simpleSlash(ctx sdk.Ctx, addr sdk.Address, amount sdk.BigInt) {
+ 			return
+ 		}
+ 	}
++
+ 	// Log that a slash occurred
+ 	ctx.Logger().Info(fmt.Sprintf("validator %s simple slashed; burned %s tokens",
+ 		validator.GetAddress(), amount.String()))
+@@ -108,6 +109,7 @@ func (k Keeper) slash(ctx sdk.Ctx, addr sdk.Address, infractionHeight, power int
+ 			return
+ 		}
+ 	}
++
+ 	// Log that a slash occurred
+ 	logger.Info(fmt.Sprintf("validator %s slashed by slash factor of %s; burned %v tokens",
+ 		validator.GetAddress(), slashFactor.String(), tokensToBurn))
