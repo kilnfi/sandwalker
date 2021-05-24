@@ -14,4 +14,4 @@ services:
     - "8081:8081"
     - "26656:26656"
     volumes:
-    - "./data:/home/app/data"
+    - "./data:/home/app/.pocket/data"
