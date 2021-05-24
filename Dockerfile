@@ -24,6 +24,6 @@ EXPOSE 5000
 ADD app.py /code/
 ADD sandwalker /code/sandwalker
 
-ENV DATABASE_URI "sqlite:///../infra/data/timeline.db"
+ENV DATABASE_URI sqlite:////data/timeline.db?mode=ro
 
 CMD ["gunicorn", "-w", "4", "-b", ":5000", "app:app"]

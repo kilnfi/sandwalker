@@ -8,7 +8,7 @@ class ConfigClass(object):
     """SandWalker Flask application config."""
 
     SERVER_NAME = os.getenv('VIRTUALHOST', default='127.0.0.1:5000')    
-    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URI', default='sqlite:///data/timeline.db')
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URI', default='sqlite:////data/timeline.db?mode=ro')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     USER_APP_NAME = "The Sand Walker"
     TEMPLATES_AUTO_RELOAD = False
