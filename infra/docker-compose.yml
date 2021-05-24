@@ -2,7 +2,7 @@ version: "3.8"
 services:
   sandwalker_frontend:
     environment:
-      - VIRTUALHOST=dev.neuromancer.sbrk.org:5000
+      - VIRTUALHOST=neuromancer.sbrk.org:5000
     build: ../
     ports:
     - "5000:5000"

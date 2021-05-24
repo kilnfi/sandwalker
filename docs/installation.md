@@ -17,6 +17,8 @@ The Sandwalker is ready-to-deploy using Docker Compose:
 
 ```
 cd infra
+mkdir data
+sudo chown -R 1005 data
 docker-compose build
 docker-compose up -d
 ```
