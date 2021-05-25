@@ -1,5 +1,3 @@
-/[WIP]: This documentation is not yet aligned with the current implementation./
-
 # Installation Guide
 
 This guide explains how to set-up your own stack of the Sandwalker.
@@ -13,17 +11,30 @@ You need:
 
 ## Installation
 
-The Sandwalker is ready-to-deploy using Docker Compose:
+First, create a directory that will be used by the Pocket node as a
+data directory (both for the blockchain and the Sandwalker database):
 
 ```
 cd infra
 mkdir data
 sudo chown -R 1005 data
+```
+
+Edit the configuration so that the `VIRTUALHOST` environment variable
+points to the virtualhost you want:
+
+```
+$EDITOR docker-compose.yml    # edit VIRTUALHOST=<you_hostname>
+```
+
+Build and run:
+
+```
 docker-compose build
 docker-compose up -d
 ```
 
-After a couple of minutes, you should have:
+After a couple of seconds, you should have:
 
 - the frontend listening locally on port `5000`,
 - an instrumentalized Pocket node synchronizing from block 0.
