@@ -3,7 +3,7 @@
 import csv
 
 from flask import Blueprint
-from flask import abort, current_app, flash, jsonify, make_response, redirect, render_template, request, url_for
+from flask import abort, current_app, flash, jsonify, make_response, redirect, render_template, request, send_file, url_for
 from flask_minify import minify
 from io import StringIO
 from sassutils.wsgi import SassMiddleware
@@ -25,6 +25,11 @@ def home():
     current_height = last.block if last else 'unknown'
 
     return render_template('home.html', current_height=current_height)
+
+
+@sandwalker.route('/daily-dump', methods=['GET'])
+def daily_dump():
+    return send_file('/data/timeline-backup.db.tar.gz')
 
 
 @sandwalker.route('/explorer', methods=['GET', 'POST'])

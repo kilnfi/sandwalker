@@ -1,0 +1,9 @@
+#!/bin/sh
+#
+# This script is ran daily to provide a copy of the database that can
+# be processed offline.
+
+sqlite /data/timeline.db ".backup /data/timeline-backup.db"
+tar -zcvf timeline-backup.db.tar.gz /data/timeline-backup.db
+rm -f /data/timeline-backup.db
+cp timeline-backup.db.tar.gz /data/timeline-backup.db.tar.gz

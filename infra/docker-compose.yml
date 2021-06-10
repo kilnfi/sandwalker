@@ -15,3 +15,7 @@ services:
     - "26656:26656"
     volumes:
     - "./data:/home/app/.pocket/data"
+  sandwalker_cron:
+    build: ../cron/
+    volumes:
+    - "./data:/data"
