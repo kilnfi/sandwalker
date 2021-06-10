@@ -24,6 +24,7 @@ class BasicTests(unittest.TestCase):
     def test_home(self):
         response = self.test_app.get('/', follow_redirects=True)
         self.assertEqual(response.status_code, 200)
+        assert 'Current Height is <b>25000</b>' in str(response.data)
 
     def test_explorer(self):
         response = self.test_app.get('/explorer', follow_redirects=True)
