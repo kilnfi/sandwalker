@@ -18,7 +18,10 @@ sandwalker = Blueprint(
 
 @sandwalker.route('/', methods=['GET', 'POST'])
 def home():
-    return render_template('home.html')
+    last = TimelineEntry.query.order_by(TimelineEntry.id.desc()).limit(1).first()
+    current_height = last.block if last else 'unknown'
+
+    return render_template('home.html', current_height=current_height)
 
 
 @sandwalker.route('/explorer', methods=['GET', 'POST'])
