@@ -18,12 +18,7 @@ def make_entries_by_month(entries):
     count = 0
 
     for entry in entries:
-
-        print(str(entry))
-
         current_date = entry.time.strftime("%Y-%m-01")
-
-        print(current_date)
 
         if not current_date in r:
             r[current_date] = {
