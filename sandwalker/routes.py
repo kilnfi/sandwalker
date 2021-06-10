@@ -29,7 +29,7 @@ def home():
 
 @sandwalker.route('/daily-dump', methods=['GET'])
 def daily_dump():
-    return send_file('/data/timeline-backup.db.tar.gz')
+    return send_file('/data/timeline-backup.db.tar.gz', cache_timeout=0)
 
 
 @sandwalker.route('/explorer', methods=['GET', 'POST'])
