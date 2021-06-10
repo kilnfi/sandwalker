@@ -1,4 +1,6 @@
+import datetime
 import os
+import time
 import unittest
  
 from sandwalker import create_app
@@ -13,7 +15,7 @@ class BasicTests(unittest.TestCase):
             models.db.create_all()
             self.test_app = self.app.test_client()
             models.db.session.add(
-                models.TimelineEntry(account='84', block=25000, amount=1000000))
+                models.TimelineEntry(account='84', block=25000, amount=1000000, time=datetime.date.fromisoformat('2021-05-21')))
             models.db.session.commit()
  
     def tearDown(self):

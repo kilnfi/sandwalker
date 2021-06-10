@@ -34,6 +34,7 @@ def explorer(account=None):
     
     return render_template('explorer.html', form=form)
 
+
 @sandwalker.route('/explore/<account>', methods=['GET'])
 def explore(account):
 
