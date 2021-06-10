@@ -1,8 +1,11 @@
 """Sandwalker routes."""
 
+import csv
+
 from flask import Blueprint
-from flask import abort, current_app, flash, jsonify, redirect, render_template, request, url_for
+from flask import abort, current_app, flash, jsonify, make_response, redirect, render_template, request, url_for
 from flask_minify import minify
+from io import StringIO
 from sassutils.wsgi import SassMiddleware
 
 from .models import TimelineEntry
@@ -53,6 +56,26 @@ def explore(account):
     
     return render_template(
         'explore.html', account=account, entries_by_month=entries_by_month, total=total, count=count)
+
+
+@sandwalker.route('/export/<account>', methods=['GET'])
+def export(account):
+    fields = ['block_time', 'block_height', 'reward_amount']
+    output = StringIO()
+    csv_writer = csv.DictWriter(output, fieldnames=fields)
+    csv_writer.writeheader()
+
+    account = account.lower()
+    entries = TimelineEntry.query.filter(TimelineEntry.account == account).all()
+    for entry in entries:
+        csv_writer.writerow(
+            {'block_time': entry.time, 'block_height': entry.block, 'reward_amount': entry.amount})
+
+    response = make_response(output.getvalue())
+    response.headers["Content-Disposition"] = 'attachment; filename={0}.csv'.format(account)
+    response.headers["Content-type"] = 'text/csv'
+
+    return response
 
 
 @sandwalker.route('/about')

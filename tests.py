@@ -56,6 +56,11 @@ class BasicTests(unittest.TestCase):
         assert '1 rewards earned' in str(response.data)
         assert '1.000 <small class="exp">pokt</small> minted' in str(response.data)
 
+    def test_csv_export(self):
+        response = self.test_app.get('/export/84', follow_redirects=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(b'block_time,block_height,reward_amount\r\n2021-05-21 00:00:00,25000,1000000\r\n', response.data)
+
     def test_api_rewards_all(self):
         response = self.test_app.get('/api/rewards/84', follow_redirects=True)
         self.assertEqual(response.status_code, 200)
