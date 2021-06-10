@@ -27,10 +27,9 @@
       <li>{{ '%0.3f'|format(total / 10**6) }} <small class="exp">pokt</small> minted</li>
     </ul>
 
-    <p>
-      <a href="{{ url_for('sandwalker.export', account=account) }}" class="right-button">Download CSV</a>
-    </p>
-
+    <a href="{{ url_for('sandwalker.export', account=account) }}" class="right-button">Download CSV</a>
+    <div class="clear"></div>
+    
     <h3>History</h3>
 
     <ul>
