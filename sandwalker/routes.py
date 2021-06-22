@@ -8,10 +8,10 @@ from flask import abort, current_app, flash, jsonify, make_response, redirect, r
 from flask_minify import minify
 from io import StringIO
 from sassutils.wsgi import SassMiddleware
-from sqlalchemy import and_
+from sqlalchemy import and_, distinct, func, tuple_
 
-from .models import TimelineEntry
-from .forms import ViewPocketAccountHistoryForm
+from .models import db, TimelineEntry
+from .forms import ReportForm, ViewPocketAccountHistoryForm
 from .pocket import make_entries_by_month
 
 
@@ -41,8 +41,74 @@ def explorer(account=None):
     form = ViewPocketAccountHistoryForm()
     if request.method == 'POST' and form.validate_on_submit():
         return redirect(url_for('sandwalker.explore', account=form.account.data))
-    
+
     return render_template('explorer.html', form=form)
+
+
+def sanitize_accounts(accounts):
+    splitters = [',', '\n', '\n', '\t', ';']
+    accounts = accounts.lower().strip()
+    for splitter in splitters:
+        accounts = accounts.replace(splitter, ' ')
+    return [a.strip() for a in accounts.split(' ')]
+
+
+@sandwalker.route('/reporter', methods=['GET', 'POST'])
+def reporter():
+    form = ReportForm()
+    accounts = None
+    entries = None
+    node_count = 0
+
+    if request.method == 'POST' and form.validate_on_submit():
+        accounts = sanitize_accounts(form.accounts.data)
+        if len(accounts) == 0:
+            flash('Invalid list of account identifiers (accepted format: csv, space separated, tab separated, ...)', 'error')
+
+        query = db.session.query(
+            func.strftime("%Y-%m-01", TimelineEntry.time),
+            func.sum(TimelineEntry.amount)).filter(
+                TimelineEntry.account.in_(accounts)).group_by(
+                    func.strftime("%Y-%m-01", TimelineEntry.time))
+
+        print(query.statement)
+
+        entries = query.all()
+        node_count = len(accounts)
+
+    return render_template('reporter.html', form=form, accounts=accounts, entries=entries, node_count=node_count)
+
+
+@sandwalker.route('/csv/overview', methods=['POST'])
+def export_csv_overview():
+    form = ReportForm()
+
+    fields = ['month', 'account', 'total_upkt']
+    output = StringIO()
+    csv_writer = csv.DictWriter(output, fieldnames=fields)
+    csv_writer.writeheader()
+
+    if form.validate_on_submit():
+        accounts = sanitize_accounts(form.accounts.data)
+        query = db.session.query(
+            func.strftime("%Y-%m-01", TimelineEntry.time),
+            TimelineEntry.account,
+            func.sum(TimelineEntry.amount)).filter(
+                TimelineEntry.account.in_(accounts)).group_by(
+                    func.strftime("%Y-%m-01", TimelineEntry.time),
+                    TimelineEntry.account)
+
+        entries = query.all()
+
+        for entry in entries:
+            csv_writer.writerow(
+                {'month': entry[0], 'account': entry[1], 'total': float(entry[2])})
+
+    response = make_response(output.getvalue())
+    response.headers["Content-Disposition"] = 'attachment; filename=pocket_monthly_report.csv'
+    response.headers["Content-type"] = 'text/csv'
+
+    return response
 
 
 @sandwalker.route('/explore/<account>', methods=['GET'])
@@ -53,7 +119,7 @@ def explore(account):
     count = None
 
     if account:
-        account = account.lower()
+        account = account.lower().strip()
         entries = TimelineEntry.query.filter(TimelineEntry.account == account).all()
 
         if len(entries) == 0:
@@ -65,9 +131,9 @@ def explore(account):
         'explore.html', account=account, entries_by_month=entries_by_month, total=total, count=count)
 
 
-@sandwalker.route('/export/<account>', methods=['GET'])
-def export(account):
-    fields = ['block_time', 'block_height', 'reward_amount']
+@sandwalker.route('/csv/account/<account>', methods=['GET'])
+def export_csv_account(account):
+    fields = ['block_time', 'block_height', 'reward_upkt']
     output = StringIO()
     csv_writer = csv.DictWriter(output, fieldnames=fields)
     csv_writer.writeheader()
@@ -76,7 +142,7 @@ def export(account):
     entries = TimelineEntry.query.filter(TimelineEntry.account == account).all()
     for entry in entries:
         csv_writer.writerow(
-            {'block_time': entry.time, 'block_height': entry.block, 'reward_amount': entry.amount})
+            {'block_time': entry.time, 'block_height': entry.block, 'reward_upkt': entry.amount})
 
     response = make_response(output.getvalue())
     response.headers["Content-Disposition"] = 'attachment; filename={0}.csv'.format(account)

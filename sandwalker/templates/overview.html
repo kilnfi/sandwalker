@@ -1,0 +1,38 @@
+{% from "_macros.html" import render_field, render_errors %}
+
+{% extends "base.html" %}
+
+{% set active = "explorer" %}
+
+{% block content %}
+<article lang="en">
+  <header>
+    <h1>Sand Walker</h1>
+    
+    {% include "glfx.html" %}
+    
+    <small>The Pocket Reward Explorer</small>
+  </header>
+  <div id="content">
+
+    {% include "_flashes.html" %}
+    {{ render_errors(form) }}
+
+    <h3>Reward History Explorer</h3>
+
+    <form action="" method="POST" novalidate formnovalidate class="form" role="form">
+      {{ form.hidden_tag() }}
+      
+      {{ render_field(form.account, label='Pocket Account Identifier') }}
+      
+      <br />
+      
+      <input type="submit" value="View Rewards" />
+      <div class="clear"></div>
+      
+    </form>
+
+  </div>
+
+</article>
+{% endblock %}

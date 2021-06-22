@@ -59,9 +59,9 @@ class BasicTests(unittest.TestCase):
         assert '2021-05-21' in str(response.data)
 
     def test_csv_export(self):
-        response = self.test_app.get('/export/84', follow_redirects=True)
+        response = self.test_app.get('/csv/account/84', follow_redirects=True)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(b'block_time,block_height,reward_amount\r\n2021-05-21 00:00:00,25000,1000000\r\n', response.data)
+        self.assertEqual(b'block_time,block_height,reward_upkt\r\n2021-05-21 00:00:00,25000,1000000\r\n', response.data)
 
     def test_api_rewards_all(self):
         response = self.test_app.post(

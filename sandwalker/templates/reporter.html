@@ -1,0 +1,82 @@
+{% from "_macros.html" import render_field, render_errors %}
+
+{% extends "base.html" %}
+
+{% set active = "explorer" %}
+
+{% block content %}
+<article lang="en">
+  <header>
+    <h1>Sand Walker</h1>
+    
+    {% include "glfx.html" %}
+    
+    <small>The Pocket Reward Explorer</small>
+  </header>
+  <div id="content">
+
+    {% include "_flashes.html" %}
+    {{ render_errors(form) }}
+
+    {% if accounts %}
+
+    <h3>Summary of Pocket Accounts {{ node_count }}</h3>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+	    <th>Month</th>
+	    <th>Average per Account</th>
+	    <th>Total</th>
+	  </tr>
+	</thead>
+	<tbody>
+	  {% for date, total in entries %}
+	  <tr>
+	    <td>{{ date }}</td>
+	    <td>{{ '%0.3f'|format((total / 10**6) / node_count) }} <small class="exp">pokt</small></td>
+	    <td>{{ '%0.3f'|format(total / 10**6) }} <small class="exp">pokt</small></td>
+	  </tr>
+	  {% endfor %}
+	</tbody>
+      </table>
+    </div>
+
+    <br />
+
+    <form name="export_csv_overview" method="POST" action="{{ url_for('sandwalker.export_csv_overview') }}">
+      <input type="hidden" name="accounts" value="{{ accounts|join(' ') }}">
+      <input type="submit" class="right-button" value="Download CSV" />
+      <div class="clear"></div>
+    </form>
+
+
+    <h3>Pocket Account Details</h3>
+
+    <ul>
+    {% for account in accounts %}
+      <li><a href="{{ url_for('sandwalker.explore', account=account) }}">{{ account }}</a></li>
+    {% endfor %}
+    </ul>
+
+    {% else %}
+    <h3>Reward Report</h3>
+
+    <form action="" method="POST" novalidate formnovalidate class="form" role="form">
+      {{ form.hidden_tag() }}
+      
+      {{ render_field(form.accounts, label='List of Pocket Account Identifiers') }}
+
+      <br />
+      
+      <input type="submit" value="Generate Report" />
+      <div class="clear"></div>
+      
+    </form>
+    {% endif %}
+
+  </div>
+
+</article>
+{% endblock %}

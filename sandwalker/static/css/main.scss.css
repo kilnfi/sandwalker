@@ -269,7 +269,20 @@ form .help-error {
 form .error-star {
   color: var(--color-ko); }
 
-input[type="submit"], .right-button, .price {
+form textarea {
+  padding: 0.1em;
+  font: inherit;
+  background-color: var(--color-light-bg);
+  border: none;
+  color: white;
+  width: 100%;
+  resize: none;
+  margin-bottom: 1em; }
+  form textarea:active, form textarea:focus {
+    background-color: var(--color-focus-bg);
+    outline: none; }
+
+input[type="submit"], .right-button, .price, textarea {
   width: inherit;
   padding-top: 0.2em;
   padding-bottom: 0.2em;

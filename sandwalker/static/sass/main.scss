@@ -338,10 +338,26 @@ form {
     .error-star {
 	color: var(--color-ko);
     }
+
+    textarea {
+	padding: 0.1em;
+	font: inherit;
+	background-color: var(--color-light-bg);
+	border: none;
+	color: white;
+	width: 100%;
+	resize: none;
+	margin-bottom: 1em;
+
+	&:active, &:focus {
+	    background-color: var(--color-focus-bg);
+	    outline: none;
+	}
+    }
 }
 
 // Form submit and buttons
-input[type="submit"], .right-button, .price {
+input[type="submit"], .right-button, .price, textarea {
     width: inherit;
     padding-top: 0.2em;
     padding-bottom: 0.2em;
