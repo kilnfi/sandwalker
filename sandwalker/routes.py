@@ -100,7 +100,7 @@ def export_csv_overview():
 
         for entry in entries:
             csv_writer.writerow(
-                {'month': entry[0], 'account': entry[1], 'total': float(entry[2])})
+                {'month': entry[0], 'account': entry[1], 'total_upkt': float(entry[2])})
 
     response = make_response(output.getvalue())
     response.headers["Content-Disposition"] = 'attachment; filename=pocket_monthly_report.csv'
