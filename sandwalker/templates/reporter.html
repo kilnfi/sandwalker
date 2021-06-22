@@ -20,28 +20,34 @@
 
     {% if accounts %}
 
-    <h3>Summary of Pocket Accounts {{ node_count }}</h3>
+    <h3>Summary of Pocket Accounts (<small>{{ node_count }}</small>)</h3>
 
+    {% if entries %}
+    
     <div class="table-wrapper">
       <table>
         <thead>
           <tr>
 	    <th>Month</th>
-	    <th>Average per Account</th>
-	    <th>Total</th>
+	    <th>Rewards</th>
 	  </tr>
 	</thead>
 	<tbody>
 	  {% for date, total in entries %}
 	  <tr>
 	    <td>{{ date }}</td>
-	    <td>{{ '%0.3f'|format((total / 10**6) / node_count) }} <small class="exp">pokt</small></td>
 	    <td>{{ '%0.3f'|format(total / 10**6) }} <small class="exp">pokt</small></td>
 	  </tr>
 	  {% endfor %}
 	</tbody>
       </table>
     </div>
+
+    {% else %}
+
+    No rewards found for these nodes.
+
+    {% endif %}
 
     <br />
 

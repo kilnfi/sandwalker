@@ -71,8 +71,6 @@ def reporter():
                 TimelineEntry.account.in_(accounts)).group_by(
                     func.strftime("%Y-%m-01", TimelineEntry.time))
 
-        print(query.statement)
-
         entries = query.all()
         node_count = len(accounts)
 
