@@ -35,7 +35,8 @@ def make_entries_by_month(entries):
             'current_count': count,
             'current_month_total': r[current_date]['month_total'],
             'block': entry.block,
-            'amount': entry.amount
+            'time': entry.time.strftime('%Y-%m-%d %H:%M:%S'),
+            'amount': entry.amount,
         })
 
     return count, total, r

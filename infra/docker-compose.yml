@@ -2,10 +2,10 @@ version: "3.8"
 services:
   sandwalker_frontend:
     environment:
-      - VIRTUALHOST=neuromancer.sbrk.org:5000
+      - VIRTUALHOST=sandwalker.sbrk.org
     build: ../
     ports:
-    - "5000:5000"
+    - "10002:5000"
     volumes:
     - "./data:/data"
   sandwalker_backend:

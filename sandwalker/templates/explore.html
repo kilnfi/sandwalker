@@ -56,6 +56,7 @@
           <tr>
 	    <th>Id</th>
 	    <th>Block Height</th>
+	    <th>Block Time</th>
 	    <th>Reward</th>
 	    <th>Month Total</th>
 	    <th>Total</th>
@@ -66,6 +67,7 @@
 	  <tr>
 	    <td>{{ entry.current_count }}</td>
 	    <td>{{ entry.block }}</td>
+	    <td>{{ entry.time }}</td>
 	    <td>{{ '%0.3f'|format(entry.amount / 10**6) }} <small class="exp">pokt</small></td>
 	    <td>{{ '%0.3f'|format(entry.current_month_total / 10**6) }} <small class="exp">pokt</small></td>
 	    <td>{{ '%0.3f'|format(entry.current_total / 10**6) }} <small class="exp">pokt</small></td>

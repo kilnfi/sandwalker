@@ -5,7 +5,7 @@ PYTHON := python3
 all: local-run
 
 local-run: .venv
-	source .venv/bin/activate && flask run --host=127.0.0.1
+	source .venv/bin/activate && flask run --host=0.0.0.0
 
 test: .venv
 	source .venv/bin/activate && DATABASE_URI="sqlite:///:memory:" python tests.py

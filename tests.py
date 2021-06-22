@@ -55,6 +55,7 @@ class BasicTests(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         assert '1 rewards earned' in str(response.data)
         assert '1.000 <small class="exp">pokt</small> minted' in str(response.data)
+        assert '2021-05-21' in str(response.data)
 
     def test_csv_export(self):
         response = self.test_app.get('/export/84', follow_redirects=True)
@@ -72,6 +73,7 @@ class BasicTests(unittest.TestCase):
                 'entries': [{
                     'amount': 1000000,
                     'block': 25000,
+                    'time': '2021-05-21 00:00:00',
                     'current_count': 1,
                     'current_month_total': 1000000,
                     'current_total': 1000000
