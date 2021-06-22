@@ -15,9 +15,11 @@ First, create a directory that will be used by the Pocket node as a
 data directory (both for the blockchain and the Sandwalker database):
 
 ```
-cd infra
+git clone https://github.com/skillz-blockchain/sandwalker.git
+cd sandwalker/infra
 mkdir data
 sudo chown -R 1005 data
+sudo chmod -R 775 data
 ```
 
 Edit the configuration so that the `VIRTUALHOST` environment variable

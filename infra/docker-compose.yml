@@ -2,7 +2,7 @@ version: "3.8"
 services:
   sandwalker_frontend:
     environment:
-      - VIRTUALHOST=sandwalker.sbrk.org
+      - VIRTUALHOST=localhost:10002
     build: ../
     ports:
     - "10002:5000"
