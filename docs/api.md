@@ -48,7 +48,8 @@ Retrieves the reward history of a list of addresses between two timestamps.
 	    {"block": 94, "reward": 17600, "time": "Wed, 29 Jul 2020 14:00:47 GMT"}
 	  ]
     }
-}```
+}
+```
 
 ## Error Response
 
