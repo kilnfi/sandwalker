@@ -2,7 +2,7 @@
 
 ## Reward History
 
-Retrieves the reward history of a list of addresses between two timestamps.
+Retrieves the reward history of a list of addresses between two (optional) timestamps.
 
 **URL** : `/api/rewards`
 
@@ -28,7 +28,7 @@ Retrieves the reward history of a list of addresses between two timestamps.
 }
 ```
 
-## Success Responses
+## Success Response
 
 **Code** : `200 OK`
 
@@ -72,7 +72,7 @@ Retrieves the reward history of a list of addresses between two timestamps.
 curl --header "Content-Type: application/json" \
      --request POST \
      --data '{"accounts": ["f1829676db577682e944fc3493d451b67ff3e29f"]}' \
-     http://sandwalker/api/rewards
+     https://sandwalker/api/rewards
 ```
 
 ```
