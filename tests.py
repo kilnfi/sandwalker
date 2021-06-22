@@ -1,4 +1,5 @@
 import datetime
+import json
 import os
 import time
 import unittest
@@ -63,22 +64,19 @@ class BasicTests(unittest.TestCase):
         self.assertEqual(b'block_time,block_height,reward_amount\r\n2021-05-21 00:00:00,25000,1000000\r\n', response.data)
 
     def test_api_rewards_all(self):
-        response = self.test_app.get('/api/rewards/84', follow_redirects=True)
+        response = self.test_app.post(
+            '/api/rewards', data=json.dumps(dict({'accounts': ['84']})), content_type='application/json')
+
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(1, response.json['count'])
-        self.assertEqual(None, response.json['error'])
-        self.assertEqual(1000000, response.json['total'])
-        self.assertEqual({
-            '2021-05-01': {
-                'entries': [{
-                    'amount': 1000000,
-                    'block': 25000,
-                    'time': '2021-05-21 00:00:00',
-                    'current_count': 1,
-                    'current_month_total': 1000000,
-                    'current_total': 1000000
-                }],
-                'month_total': 1000000}}, response.json['all_entries'])
+        self.assertEqual(response.json, {
+            'accounts': {
+                '84': [
+                    {'block': 25000,
+                     'reward': 1000000,
+                     'time': 'Thu, 20 May 2021 23:00:00 GMT'
+                     }
+                ]
+            }})
 
 
 if __name__ == "__main__":

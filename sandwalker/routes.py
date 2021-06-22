@@ -1,12 +1,14 @@
 """Sandwalker routes."""
 
 import csv
+import datetime
 
 from flask import Blueprint
 from flask import abort, current_app, flash, jsonify, make_response, redirect, render_template, request, send_from_directory, url_for
 from flask_minify import minify
 from io import StringIO
 from sassutils.wsgi import SassMiddleware
+from sqlalchemy import and_
 
 from .models import TimelineEntry
 from .forms import ViewPocketAccountHistoryForm
@@ -93,24 +95,32 @@ def resources():
     return render_template('resources.html')
 
 
-@sandwalker.route('/api/rewards/<account>', methods=['GET'])
-def api_rewards(account):
-    result = {'error': None}
-    if not account:
-        result['error'] = 'Invalid account parameters'
-        return jsonify(result), 503
+@sandwalker.route('/api/rewards', methods=['GET', 'POST'])
+def api_rewards():
+    req = request.json
 
-    account = account.lower()
-    entries = TimelineEntry.query.filter(TimelineEntry.account == account).all()
-    if len(entries) == 0:
-        result['error'] = 'No rewards found for {0}'.format(account)
-        return jsonify(result), 404
+    if 'accounts' not in req:
+        return jsonify({'error': 'Invalid request: no Pocket accounts specified'}), 503
+    accounts = [a.lower().strip() for a in req['accounts']]
 
-    count, total, entries_by_month = make_entries_by_month(entries)
+    start_date = req.get('start_date', '1970-01-01 00:00:00')
+    end_date = req.get('end_date', datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S'))
 
-    result['count'] = count
-    result['total'] = total
-    result['all_entries'] = entries_by_month
+    result = {'accounts': {}}
+
+    for account in accounts:
+        result['accounts'][account] = list()
+        entries = TimelineEntry.query.filter(
+            and_(
+                TimelineEntry.account == account,
+                TimelineEntry.time.between(start_date, end_date))).all()
+
+        for entry in entries:
+            result['accounts'][account].append({
+                'reward': entry.amount,
+                'block': entry.block,
+                'time': entry.time,
+            })
 
     return jsonify(result), 200
 
