@@ -96,6 +96,11 @@ class BasicTests(unittest.TestCase):
         assert 'Direct Link' in str(response.data)
         assert 'Download CSV' in str(response.data)
 
+    def test_csv_overview(self):
+        response = self.test_app.post('/csv/overview', data={'accounts': '84 84'}, follow_redirects=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(b'month,account,total_upkt\r\n2021-05-01,84,1000000.0\r\n', response.data)
+
 
 if __name__ == "__main__":
     unittest.main()
