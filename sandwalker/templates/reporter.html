@@ -43,20 +43,22 @@
       </table>
     </div>
 
+    <br />
+
     {% else %}
 
-    No rewards found for these nodes.
+    <p>
+      No rewards found for these nodes.
+    </p>
 
     {% endif %}
 
-    <br />
-
+    <a href="{{ url_for('sandwalker.reporter', accounts=accounts|join(' ')) }}" class="right-button">Direct Link</a>
     <form name="export_csv_overview" method="POST" action="{{ url_for('sandwalker.export_csv_overview') }}">
       <input type="hidden" name="accounts" value="{{ accounts|join(' ') }}">
       <input type="submit" class="right-button" value="Download CSV" />
-      <div class="clear"></div>
     </form>
-
+    <div class="clear"></div>
 
     <h3>Pocket Account Details</h3>
 

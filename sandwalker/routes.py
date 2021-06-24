@@ -46,25 +46,34 @@ def explorer(account=None):
 
 
 def sanitize_accounts(accounts):
-    splitters = [',', '\n', '\n', '\t', ';']
-    accounts = accounts.lower().strip()
+    splitters = [',', '\r', '\n', '\t', ';']
     for splitter in splitters:
         accounts = accounts.replace(splitter, ' ')
-    return [a.strip() for a in accounts.split(' ')]
+    result = []
+
+    for account in accounts.split(' '):
+        clean_account = account.lower().strip()
+        if clean_account:
+            result.append(clean_account)
+
+    return result
 
 
 @sandwalker.route('/reporter', methods=['GET', 'POST'])
 def reporter():
-    form = ReportForm()
+    form = ReportForm(request.form) if request.method == 'POST' else ReportForm(request.args)
     accounts = None
     entries = None
     node_count = 0
 
-    if request.method == 'POST' and form.validate_on_submit():
-        accounts = sanitize_accounts(form.accounts.data)
-        if len(accounts) == 0:
-            flash('Invalid list of account identifiers (accepted format: csv, space separated, tab separated, ...)', 'error')
+    # This can come both from GET or POST, directly use it without
+    # checking if the form is valid.
+    accounts = sanitize_accounts(form.accounts.data)
 
+    if len(accounts) == 0:
+        if request.method == 'POST':
+            flash('Invalid list of account identifiers (accepted format: csv, space separated, tab separated, ...)', 'error')
+    else:
         query = db.session.query(
             func.strftime("%Y-%m-01", TimelineEntry.time),
             func.sum(TimelineEntry.amount)).filter(
