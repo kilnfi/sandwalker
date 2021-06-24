@@ -78,6 +78,24 @@ class BasicTests(unittest.TestCase):
                 ]
             }})
 
+    def test_reporter_ok_empty(self):
+        response = self.test_app.get('/reporter', follow_redirects=True)
+        assert 'List of Pocket Account Identifiers' in str(response.data)
+
+    def test_reporter_ok_get(self):
+        response = self.test_app.get('/reporter?accounts=84 ', follow_redirects=True)
+        assert '<h3>Summary of Pocket Accounts (<small>1</small>)</h3>' in str(response.data)
+        assert '2021-05-01' in str(response.data)
+        assert 'Direct Link' in str(response.data)
+        assert 'Download CSV' in str(response.data)
+
+    def test_reporter_ok_post(self):
+        response = self.test_app.post('/reporter', data={'accounts': '84'}, follow_redirects=True)
+        assert '<h3>Summary of Pocket Accounts (<small>1</small>)</h3>' in str(response.data)
+        assert '2021-05-01' in str(response.data)
+        assert 'Direct Link' in str(response.data)
+        assert 'Download CSV' in str(response.data)
+
 
 if __name__ == "__main__":
     unittest.main()
