@@ -168,6 +168,29 @@ def resources():
     return render_template('resources.html')
 
 
+@sandwalker.route('/api/block', methods=['GET', 'POST'])
+def api_block():
+    req = request.json
+
+    if 'block' not in req:
+        return jsonify({'error': 'Invalid request: no block specified'}), 503
+    block = req.get('block')
+
+    result = []
+    entries = TimelineEntry.query.filter(
+        TimelineEntry.block == block).all()
+
+    for entry in entries:
+        result.append({
+            'reward': entry.amount,
+            'account': entry.account,
+            'block': entry.block,
+            'time': entry.time,
+        })
+
+    return jsonify(result), 200
+
+
 @sandwalker.route('/api/rewards', methods=['GET', 'POST'])
 def api_rewards():
     req = request.json
