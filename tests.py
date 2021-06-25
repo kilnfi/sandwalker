@@ -83,7 +83,7 @@ class BasicTests(unittest.TestCase):
             '/api/block', data=json.dumps(dict({'block': 25000})), content_type='application/json')
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json, [{'account': '84', 'block': 25000, 'reward': 1000000, 'time': 'Thu, 20 May 2021 23:00:00 GMT'}])
+        self.assertEqual(response.json, {'entries': [{'account': '84', 'reward': 1000000, 'time': 'Thu, 20 May 2021 23:00:00 GMT'}]})
 
     def test_reporter_ok_empty(self):
         response = self.test_app.get('/reporter', follow_redirects=True)

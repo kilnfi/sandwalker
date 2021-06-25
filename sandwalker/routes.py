@@ -176,15 +176,14 @@ def api_block():
         return jsonify({'error': 'Invalid request: no block specified'}), 503
     block = req.get('block')
 
-    result = []
+    result = {'entries': []}
     entries = TimelineEntry.query.filter(
         TimelineEntry.block == block).all()
 
     for entry in entries:
-        result.append({
+        result['entries'].append({
             'reward': entry.amount,
             'account': entry.account,
-            'block': entry.block,
             'time': entry.time,
         })
 

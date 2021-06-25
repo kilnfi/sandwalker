@@ -93,7 +93,7 @@ Retrieves the reward history of all nodes at a given block.
 
 ```json
 {
-    "block": 42,
+    "block": 1262,
 }
 ```
 
@@ -104,16 +104,18 @@ Retrieves the reward history of all nodes at a given block.
 **Content example** : For the example above...
 
 ```json
-[
-    {"account": "5bcae50364952a5fa3a8363f93f2adffc9eff42e", "block": 1262, "reward": 41438400, "time": "Mon, 10 Aug 2020 17: 36: 33 GMT"},
-    {"account": "f1829676db577682e944fc3493d451b67ff3e29f", "block": 1262, "reward": 5121600, "time": "Mon, 10 Aug 2020 17: 36: 33 GMT"},
-    {"account": "f1889ba5d43b6dfdd8a9460b9ca45beaca901aa6", "block": 1262, "reward": 41420600, "time": "Mon, 10 Aug 2020 17: 36: 33 GMT"},
-    {"account": "f1829676db577682e944fc3493d451b67ff3e29f", "block": 1262, "reward": 5119400, "time": "Mon, 10 Aug 2020 17: 36: 33 GMT"},
-    {"account": "a322d710892c3f7d730a7f5f02656dbebe1c6e47", "block": 1262, "reward": 40592900, "time": "Mon, 10 Aug 2020 17: 36: 33 GMT"},
-    {"account": "f1829676db577682e944fc3493d451b67ff3e29f", "block": 1262, "reward": 5017100, "time": "Mon, 10 Aug 2020 17: 36: 33 GMT"},
-    {"account": "4b965a477f108a26444865c4757931f7fabcea99", "block": 1262, "reward": 42186000, "time": "Mon, 10 Aug 2020 17: 36: 33 GMT"},
-    {"account": "f1829676db577682e944fc3493d451b67ff3e29f", "block": 1262, "reward": 5214000, "time": "Mon, 10 Aug 2020 17: 36: 33 GMT"},
-    {"account": "2c3499c840dc286b74fa090e00d29555bff101cb", "block": 1262, "reward": 41616400, "time": "Mon, 10 Aug 2020 17: 36: 33 GMT"}
+{
+  "entries": [
+    {"account": "5bcae50364952a5fa3a8363f93f2adffc9eff42e", "reward": 41438400, "time": "Mon, 10 Aug 2020 17: 36: 33 GMT"},
+    {"account": "f1829676db577682e944fc3493d451b67ff3e29f", "reward": 5121600, "time": "Mon, 10 Aug 2020 17: 36: 33 GMT"},
+    {"account": "f1889ba5d43b6dfdd8a9460b9ca45beaca901aa6", "reward": 41420600, "time": "Mon, 10 Aug 2020 17: 36: 33 GMT"},
+    {"account": "f1829676db577682e944fc3493d451b67ff3e29f", "reward": 5119400, "time": "Mon, 10 Aug 2020 17: 36: 33 GMT"},
+    {"account": "a322d710892c3f7d730a7f5f02656dbebe1c6e47", "reward": 40592900, "time": "Mon, 10 Aug 2020 17: 36: 33 GMT"},
+    {"account": "f1829676db577682e944fc3493d451b67ff3e29f", "reward": 5017100, "time": "Mon, 10 Aug 2020 17: 36: 33 GMT"},
+    {"account": "4b965a477f108a26444865c4757931f7fabcea99", "reward": 42186000, "time": "Mon, 10 Aug 2020 17: 36: 33 GMT"},
+    {"account": "f1829676db577682e944fc3493d451b67ff3e29f", "reward": 5214000, "time": "Mon, 10 Aug 2020 17: 36: 33 GMT"},
+    {"account": "2c3499c840dc286b74fa090e00d29555bff101cb", "reward": 41616400, "time": "Mon, 10 Aug 2020 17: 36: 33 GMT"}
+  ]
 ]
 ```
 
@@ -144,5 +146,5 @@ curl --header "Content-Type: application/json" \
 ```
 
 ```
-[{"account":"5bcae50364952a5fa3a8363f93f2adffc9eff42e","block":1262,"reward":41438400,"time":"Mon, 10 Aug 2020 17:36:33 GMT"},{"account":"f1829676db577682e944fc3493d451b67ff3e29f","block":1262,"reward":5121600,"time":"Mon, 10 Aug 2020 17:36:33 GMT"},{"account":"f1889ba5d43b6dfdd8a9460b9ca45beaca901aa6","block":1262,"reward":41420600,"time":"Mon, 10 Aug 2020 17:36:33 GMT"},{"account":"f1829676db577682e944fc3493d451b67ff3e29f","block":1262,"reward":5119400,"time":"Mon, 10 Aug 2020 17:36:33 GMT"},{"account":"a322d710892c3f7d730a7f5f02656dbebe1c6e47","block":1262,"reward":40592900,"time":"Mon, 10 Aug 2020 17:36:33 GMT"},{"account":"f1829676db577682e944fc3493d451b67ff3e29f","block":1262,"reward":5017100,"time":"Mon, 10 Aug 2020 17:36:33 GMT"},{"account":"4b965a477f108a26444865c4757931f7fabcea99","block":1262,"reward":42186000,"time":"Mon, 10 Aug 2020 17:36:33 GMT"},{"account":"f1829676db577682e944fc3493d451b67ff3e29f","block":1262,"reward":5214000,"time":"Mon, 10 Aug 2020 17:36:33 GMT"},{"account":"2c3499c840dc286b74fa090e00d29555bff101cb","block":1262,"reward":41616400,"time":"Mon, 10 Aug 2020 17:36:33 GMT"},{"account":"f1829676db577682e944fc3493d451b67ff3e29f","block":1262,"reward":5143600,"time":"Mon, 10 Aug 2020 17:36:33 GMT"}]
+["entries":{"account":"5bcae50364952a5fa3a8363f93f2adffc9eff42e","reward":41438400,"time":"Mon, 10 Aug 2020 17:36:33 GMT"},{"account":"f1829676db577682e944fc3493d451b67ff3e29f","reward":5121600,"time":"Mon, 10 Aug 2020 17:36:33 GMT"},{"account":"f1889ba5d43b6dfdd8a9460b9ca45beaca901aa6","reward":41420600,"time":"Mon, 10 Aug 2020 17:36:33 GMT"},{"account":"f1829676db577682e944fc3493d451b67ff3e29f","reward":5119400,"time":"Mon, 10 Aug 2020 17:36:33 GMT"},{"account":"a322d710892c3f7d730a7f5f02656dbebe1c6e47","reward":40592900,"time":"Mon, 10 Aug 2020 17:36:33 GMT"},{"account":"f1829676db577682e944fc3493d451b67ff3e29f","reward":5017100,"time":"Mon, 10 Aug 2020 17:36:33 GMT"},{"account":"4b965a477f108a26444865c4757931f7fabcea99","reward":42186000,"time":"Mon, 10 Aug 2020 17:36:33 GMT"},{"account":"f1829676db577682e944fc3493d451b67ff3e29f","reward":5214000,"time":"Mon, 10 Aug 2020 17:36:33 GMT"},{"account":"2c3499c840dc286b74fa090e00d29555bff101cb","reward":41616400,"time":"Mon, 10 Aug 2020 17:36:33 GMT"},{"account":"f1829676db577682e944fc3493d451b67ff3e29f","reward":5143600,"time":"Mon, 10 Aug 2020 17:36:33 GMT"}}]
 ```
