@@ -21,10 +21,18 @@ sandwalker = Blueprint(
 )
 
 
+def last_height():
+    entry = TimelineEntry.query.order_by(TimelineEntry.id.desc()).limit(1).first()
+
+    return entry.block if entry else None
+
+    return height
+
+
 @sandwalker.route('/', methods=['GET', 'POST'])
 def home():
-    last = TimelineEntry.query.order_by(TimelineEntry.id.desc()).limit(1).first()
-    current_height = last.block if last else 'unknown'
+    last = last_height()
+    current_height = last if last else 'unknown'
 
     return render_template('home.html', current_height=current_height)
 
@@ -168,12 +176,27 @@ def resources():
     return render_template('resources.html')
 
 
+@sandwalker.route('/api/height', methods=['GET', 'POST'])
+def api_height():
+    height = last_height()
+    if not height:
+        return jsonify({'error': 'Sandwalker has not initialized yet and has no complete block synced'}), 503
+
+    # We return the height -1 here to handle consistency properly: if
+    # we are process rewards of the current block, it will yield
+    # incomplete data for this block. The previous block is 100% OK
+    # though.
+
+    result = {'height': height - 1}
+    return jsonify(result), 200
+
+
 @sandwalker.route('/api/block', methods=['GET', 'POST'])
 def api_block():
     req = request.json
 
     if 'block' not in req:
-        return jsonify({'error': 'Invalid request: no block specified'}), 503
+        return jsonify({'error': 'Invalid request: no block specified'}), 400
     block = req.get('block')
 
     result = {'entries': []}
@@ -195,7 +218,7 @@ def api_rewards():
     req = request.json
 
     if 'accounts' not in req:
-        return jsonify({'error': 'Invalid request: no Pocket accounts specified'}), 503
+        return jsonify({'error': 'Invalid request: no Pocket accounts specified'}), 400
     accounts = [a.lower().strip() for a in req['accounts']]
 
     start_date = req.get('start_date', '1970-01-01 00:00:00')

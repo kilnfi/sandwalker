@@ -85,6 +85,12 @@ class BasicTests(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json, {'entries': [{'account': '84', 'reward': 1000000, 'time': 'Thu, 20 May 2021 23:00:00 GMT'}]})
 
+    def test_api_height(self):
+        response = self.test_app.get('/api/height')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json, {'height': 24999})
+
     def test_reporter_ok_empty(self):
         response = self.test_app.get('/reporter', follow_redirects=True)
         assert 'List of Pocket Account Identifiers' in str(response.data)

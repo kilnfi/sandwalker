@@ -148,3 +148,52 @@ curl --header "Content-Type: application/json" \
 ```
 ["entries":{"account":"5bcae50364952a5fa3a8363f93f2adffc9eff42e","reward":41438400,"time":"Mon, 10 Aug 2020 17:36:33 GMT"},{"account":"f1829676db577682e944fc3493d451b67ff3e29f","reward":5121600,"time":"Mon, 10 Aug 2020 17:36:33 GMT"},{"account":"f1889ba5d43b6dfdd8a9460b9ca45beaca901aa6","reward":41420600,"time":"Mon, 10 Aug 2020 17:36:33 GMT"},{"account":"f1829676db577682e944fc3493d451b67ff3e29f","reward":5119400,"time":"Mon, 10 Aug 2020 17:36:33 GMT"},{"account":"a322d710892c3f7d730a7f5f02656dbebe1c6e47","reward":40592900,"time":"Mon, 10 Aug 2020 17:36:33 GMT"},{"account":"f1829676db577682e944fc3493d451b67ff3e29f","reward":5017100,"time":"Mon, 10 Aug 2020 17:36:33 GMT"},{"account":"4b965a477f108a26444865c4757931f7fabcea99","reward":42186000,"time":"Mon, 10 Aug 2020 17:36:33 GMT"},{"account":"f1829676db577682e944fc3493d451b67ff3e29f","reward":5214000,"time":"Mon, 10 Aug 2020 17:36:33 GMT"},{"account":"2c3499c840dc286b74fa090e00d29555bff101cb","reward":41616400,"time":"Mon, 10 Aug 2020 17:36:33 GMT"},{"account":"f1829676db577682e944fc3493d451b67ff3e29f","reward":5143600,"time":"Mon, 10 Aug 2020 17:36:33 GMT"}}]
 ```
+
+## Height
+
+Retrieves the blockchain height of the Sandwalker.
+
+**URL** : `/api/height`
+
+**Method** : `POST`, `GET`
+
+**Auth required** : NO
+
+## Success Response
+
+**Code** : `200 OK`
+
+**Content example** : For the example above...
+
+```json
+{
+  "height": 24999
+}
+```
+
+## Error Response
+
+**Condition** : Sandwalker has not initialized yet and has no complete block synced
+
+**Code** : `503 Service Unavailable`
+
+**Content** : `{"error":"Sandwalker has not initialized yet and has no complete block synced"}`
+
+## Notes
+
+The block returned may be smaller than the actual Sandwalker height,
+the data up to the returned height is guaranteed to be complete.
+
+## Examples
+
+### Bash
+
+```
+curl --header "Content-Type: application/json" \
+     --request GET \
+     https://sandwalker.sbrk.org/api/height
+```
+
+```
+{"height":1261}
+```
