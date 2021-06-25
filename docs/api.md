@@ -116,7 +116,7 @@ Retrieves the reward history of all nodes at a given block.
     {"account": "f1829676db577682e944fc3493d451b67ff3e29f", "reward": 5214000, "time": "Mon, 10 Aug 2020 17: 36: 33 GMT"},
     {"account": "2c3499c840dc286b74fa090e00d29555bff101cb", "reward": 41616400, "time": "Mon, 10 Aug 2020 17: 36: 33 GMT"}
   ]
-]
+}
 ```
 
 ## Error Response
