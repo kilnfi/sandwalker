@@ -22,6 +22,9 @@
 	<li class='{% if active == "explorer" %} active {% endif %}'>
 	  <a href="{{ url_for('sandwalker.explorer') }}">Explorer</a>
 	</li>
+	<li class='{% if active == "explorer" %} active {% endif %}'>
+	  <a href="{{ url_for('sandwalker.reporter') }}">Reporter</a>
+	</li>
 	<li class='{% if active == "resources" %} active {% endif %}'>
 	  <a href="{{ url_for('sandwalker.resources') }}">Resources</a>
 	</li>
