@@ -1,13 +1,14 @@
-version: "3.8"
+version: "3.3"
 services:
   sandwalker_frontend:
     environment:
-      - VIRTUALHOST=localhost:10002
+      - VIRTUALHOST=sandwalker.sbrk.org
     build: ../
     ports:
     - "10002:5000"
     volumes:
     - "./data:/data"
+    restart: always
   sandwalker_backend:
     build: ../pocket/
     ports:
@@ -15,7 +16,9 @@ services:
     - "26656:26656"
     volumes:
     - "./data:/home/app/.pocket/data"
+    restart: always
   sandwalker_cron:
     build: ../cron/
     volumes:
     - "./data:/data"
+    restart: unless-stopped

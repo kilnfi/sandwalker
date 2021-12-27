@@ -15,5 +15,6 @@ create_account_if_needed
 
 exec pocket start \
      --mainnet \
+     --useCache \
      --seeds \
      03b74fa3c68356bb40d58ecc10129479b159a145@seed1.mainnet.pokt.network:20656,64c91701ea98440bc3674fdb9a99311461cdfd6f@seed2.mainnet.pokt.network:21656
