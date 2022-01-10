@@ -21,8 +21,8 @@ RUN mkdir -p ${POCKET_PATH}
 WORKDIR $POCKET_PATH
 
 RUN git clone --branch staging https://github.com/pokt-network/pocket-core.git ${POCKET_PATH}
-COPY 0.7.0.patch ${POCKET_PATH}
-RUN cd ${POCKET_PATH} && git checkout RC-0.7.0.1 && git apply 0.7.0.patch
+COPY 0.7.1.patch ${POCKET_PATH}
+RUN cd ${POCKET_PATH} && git checkout RC-0.7.1 && git apply 0.7.1.patch
 RUN go build -tags cleveldb -o ${GOBIN}/bin/pocket ./app/cmd/pocket_core/main.go
 
 FROM alpine:3.13
