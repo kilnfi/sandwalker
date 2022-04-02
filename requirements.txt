@@ -1,5 +1,6 @@
 click==8.0.1
 Flask==2.1.1
+Flask-Markdown==0.3
 Flask-Minify==0.38
 Flask-SQLAlchemy==2.5.1
 Flask-WTF==1.0.1
@@ -13,6 +14,7 @@ Jinja2==3.1.1
 jsmin==3.0.1
 lesscpy==0.15.0
 libsass==0.21.0
+Markdown==3.3.6
 MarkupSafe==2.1.1
 ply==3.11
 portalocker==2.4.0
