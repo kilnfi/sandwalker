@@ -1,0 +1,70 @@
+diff --git a/store/timeline.go b/store/timeline.go
+new file mode 100644
+index 00000000..2b12950a
+--- /dev/null
++++ b/store/timeline.go
+@@ -0,0 +1,42 @@
++package store
++
++import (
++	"log"
++	"database/sql"
++	"time"
++
++	_ "github.com/mattn/go-sqlite3"
++)
++
++var timelineDb *sql.DB = nil
++
++func InsertTimelineEvent(account string, block int64, when time.Time, amount int64) error {
++	statement, err := timelineDb.Prepare("INSERT INTO timeline (id, account, block, time, amount) VALUES (null, ?, ?, ?, ?)")
++	if err != nil {
++		log.Printf("unable to prepare timeline insert query: %v", err)
++		return err
++	}
++	_, err = statement.Exec(account, block, when, amount)
++	if err != nil {
++		log.Printf("unable to exec timeline insert query: %v", err)
++		return err
++	}
++	return nil
++}
++
++func init () {
++	var err error
++
++	timelineDb, err = sql.Open("sqlite3", "/home/app/.pocket/data/timeline.db?_journal_mode=WAL")
++	if err != nil {
++		log.Fatalf("unable to open timeline db: %v", err)
++	}
++	statement, err := timelineDb.Prepare("CREATE TABLE IF NOT EXISTS timeline(id INTEGER NOT NULL PRIMARY KEY, account TEXT, block INTEGER, time DATETIME, amount INTEGER)")
++	if err != nil {
++		log.Fatalf("unable to prepare create table statement in timeline db: %v", err)
++	}
++	_, err = statement.Exec()
++	if err != nil {
++		log.Fatalf("unable to create table in timeline db: %v", err)
++	}
++}
+diff --git a/x/nodes/keeper/reward.go b/x/nodes/keeper/reward.go
+index cf023641..c556741b 100644
+--- a/x/nodes/keeper/reward.go
++++ b/x/nodes/keeper/reward.go
+@@ -5,6 +5,7 @@ import (
+ 	sdk "github.com/pokt-network/pocket-core/types"
+ 	govTypes "github.com/pokt-network/pocket-core/x/gov/types"
+ 	"github.com/pokt-network/pocket-core/x/nodes/types"
++	"github.com/pokt-network/pocket-core/store"
+ )
+ 
+ // RewardForRelays - Award coins to an address (will be called at the beginning of the next block)
+@@ -64,6 +65,9 @@ func (k Keeper) mint(ctx sdk.Ctx, amount sdk.BigInt, address sdk.Address) sdk.Re
+ 		return sendErr.Result()
+ 	}
+ 	logString := fmt.Sprintf("a reward of %s was minted to %s", amount.String(), address.String())
++
++	store.InsertTimelineEvent(address.String(), ctx.BlockHeight(), ctx.BlockTime(), amount.Int64())
++
+ 	k.Logger(ctx).Info(logString)
+ 	return sdk.Result{
+ 		Log: logString,
